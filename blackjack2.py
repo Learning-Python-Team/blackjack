@@ -1,3 +1,9 @@
+# TODO player total 21 isnt automatic blackjack
+# TODO double down, split cards draw one card for each
+# TODO add money
+# TODO add betting
+# TODO dealer hand should be a function looping to draw more cards
+
 import random
 import sys
 
