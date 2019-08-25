@@ -3,6 +3,7 @@
 # TODO add money
 # TODO add betting
 # TODO dealer hand should be a function looping to draw more cards
+# TODO if player sticks should check if dealers hand is greater BEFORE dealer draws card
 
 import random
 import sys
@@ -49,17 +50,6 @@ def dealer_card_value(card):
     return card
 
 
-def stick():
-    print(f"Players hand {player_hand}")
-    print(f"Dealers hand {dealer_hand}")
-    # TODO all checks should be in check_cards function
-    if player_hand == 21:
-        print("BLACKJACK, player wins")
-
-    if player_hand > 21:
-        print("busted")
-
-
 def check_cards():
     if player_hand == 21:
         print("BLACKJACK, player wins")
@@ -101,7 +91,7 @@ while True:
     hit_or_stick = input()
 
     if hit_or_stick.lower() == 's':
-        stick()
+        check_cards()
     else:
         pc3 = draw_card()
         player_card3 = card_value(pc3)
@@ -116,7 +106,7 @@ while True:
             hit_or_stick = input()
 
             if hit_or_stick.lower() == 's':
-                stick()
+                check_cards()
             else:
                 pc4 = draw_card()
                 player_card4 = card_value(pc4)
@@ -129,7 +119,7 @@ while True:
                     print("Hit or Stick 'h' or 's' > ", end="")
                     hit_or_stick = input()
                     if hit_or_stick.lower() == 's':
-                        stick()
+                        check_cards()
                     else:
                         pc5 = draw_card()
                         player_card5 = card_value(pc5)
