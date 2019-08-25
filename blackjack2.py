@@ -51,6 +51,7 @@ def dealer_card_value(card):
 
 
 def check_cards():
+    """checks cards after eah player card draw"""
     if player_hand == 21:
         print("BLACKJACK, player wins (check_cards)")
 
@@ -59,7 +60,11 @@ def check_cards():
 
 
 def place_bet(money):
-    """place bet up to max on money"""
+    """ place bet up to max on money"
+    
+    :param money: starting money
+    :return: bet
+    """""
     # TODO Place and calculate bet return bet
     pass
 
