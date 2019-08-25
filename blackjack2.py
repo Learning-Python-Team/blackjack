@@ -98,7 +98,7 @@ while True:
     print(f"Player cards: {pc1} {pc2} = {player_hand}")
 
     if player_hand == 21:
-        print("BLACKJACK, player wins")
+        print("BLACKJACK, player wins (first check in while loop)")
         continue
 
     # hit or stick
