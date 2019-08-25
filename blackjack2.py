@@ -8,13 +8,10 @@ import random
 import sys
 
 # initialize deck
+# TODO better way to create deck
 deck = ['A', 'A', 'A', 'A', 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7,
         8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 'J', 'J', 'J', 'J',
         'Q', 'Q', 'Q', 'Q', 'K', 'K', 'K', 'K']
-
-
-# shuffle deck
-random.shuffle(deck)
 
 
 def draw_card():
@@ -29,6 +26,7 @@ def card_value(card):
     if card in ['J', 'Q', 'K']:
         card = 10
     if card == 'A':
+        # TODO im not sure this works
         try:
             choice = int(input('Ace, 1 or 11?'))
         except ValueError:
@@ -54,6 +52,7 @@ def dealer_card_value(card):
 def stick():
     print(f"Players hand {player_hand}")
     print(f"Dealers hand {dealer_hand}")
+    # TODO all checks should be in check_cards function
     if player_hand == 21:
         print("BLACKJACK, player wins")
 
@@ -109,6 +108,7 @@ while True:
         player_hand += player_card3
         print(f"Player cards: {pc1} {pc2} {pc3} = {player_hand}")
         check_cards()
+        # TODO this should be in a function
         if player_hand < 21:
 
             # hit or stick
