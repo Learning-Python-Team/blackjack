@@ -3,6 +3,7 @@
 # TODO add money
 # TODO add betting
 # TODO dealer hand should be a function looping to draw more cards
+# TODO if player sticks should check if dealers hand is greater BEFORE dealer draws card
 
 import random
 import sys
@@ -49,24 +50,22 @@ def dealer_card_value(card):
     return card
 
 
-def stick():
-    print(f"Players hand {player_hand}")
-    print(f"Dealers hand {dealer_hand}")
-    # TODO all checks should be in check_cards function
-    if player_hand == 21:
-        print("BLACKJACK, player wins")
-
-    if player_hand > 21:
-        print("busted")
-
-
 def check_cards():
     if player_hand == 21:
-        print("BLACKJACK, player wins")
+        print("BLACKJACK, player wins (check_cards)")
 
     elif player_hand > 21:
-        print("Player Busted")
+        print("Player Busted (check_cards)")
 
+
+def place_bet(money):
+    """place bet up to max on money"""
+    # TODO Place and calculate bet return bet
+    pass
+
+
+# add starting money
+money = 100
 
 while True:
     # draw player cards
@@ -76,7 +75,8 @@ while True:
     # draw dealer cards
     dc1 = draw_card()
     dc2 = draw_card()
-
+    # TODO place_bet function
+    bet = place_bet(money)
     print(f"\nPlayers hand {pc1} {pc2} Dealer showing a {dc1}\n")
 
     # convert values
@@ -101,7 +101,7 @@ while True:
     hit_or_stick = input()
 
     if hit_or_stick.lower() == 's':
-        stick()
+        check_cards()
     else:
         pc3 = draw_card()
         player_card3 = card_value(pc3)
@@ -116,7 +116,7 @@ while True:
             hit_or_stick = input()
 
             if hit_or_stick.lower() == 's':
-                stick()
+                check_cards()
             else:
                 pc4 = draw_card()
                 player_card4 = card_value(pc4)
@@ -129,7 +129,7 @@ while True:
                     print("Hit or Stick 'h' or 's' > ", end="")
                     hit_or_stick = input()
                     if hit_or_stick.lower() == 's':
-                        stick()
+                        check_cards()
                     else:
                         pc5 = draw_card()
                         player_card5 = card_value(pc5)
@@ -156,7 +156,7 @@ while True:
             dealer_hand += dealer_card4
             if dealer_hand > 21:
                 print(f"Dealers bust! {dc1} {dc2} {dc3} {dc4} = {dealer_hand} Player wins")
-                sys.exit()
+                continue
             else:
                 print(f"Dealers hand {dc1} {dc2} {dc3} {dc4} = {dealer_hand}")
 
@@ -166,14 +166,17 @@ while True:
                 dealer_hand += dealer_card5
                 if dealer_hand > 21:
                     print(f"Dealers bust! {dc1} {dc2} {dc3} {dc4} {dc5} Player wins")
-                    sys.exit()
+                    continue
                 else:
                     print(f"Dealers hand {dc1} {dc2} {dc3} {dc4} {dc5} = {dealer_hand}")
 
     if dealer_hand >= player_hand or player_hand > 21:
-        print("Dealer wins")
+        print("Dealer wins (while_loop)")
+        # TODO money - bet
     else:
-        print("Player wins")
+        print("Player wins (while_loop)")
+        # TODO money + bet
+
 
     play = input("Play again?  y/n: ").lower()
     if play == 'n':
