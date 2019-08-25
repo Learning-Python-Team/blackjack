@@ -5,6 +5,9 @@
 # TODO dealer hand should be a function looping to draw more cards
 # TODO if player sticks should check if dealers hand is greater BEFORE dealer draws card
 
+# TODO there should be a single function that checks if theres a winner from each hand for the betting
+
+
 import random
 import sys
 
@@ -51,6 +54,7 @@ def dealer_card_value(card):
 
 
 def check_cards():
+    """checks cards after eah player card draw"""
     if player_hand == 21:
         print("BLACKJACK, player wins (check_cards)")
 
@@ -59,7 +63,11 @@ def check_cards():
 
 
 def place_bet(money):
-    """place bet up to max on money"""
+    """ place bet up to max on money"
+    
+    :param money: starting money
+    :return: bet
+    """""
     # TODO Place and calculate bet return bet
     pass
 
@@ -93,7 +101,7 @@ while True:
     print(f"Player cards: {pc1} {pc2} = {player_hand}")
 
     if player_hand == 21:
-        print("BLACKJACK, player wins")
+        print("BLACKJACK, player wins (first check in while loop)")
         continue
 
     # hit or stick
@@ -137,10 +145,11 @@ while True:
                         print(f"Player cards: {pc1} {pc2} {pc3} {pc4} {pc5}= {player_hand}")
                         check_cards()
 
-    # show dealer cards
+    # show dealer cards first two
     print(f"Dealers hand {dc1} {dc2} = {dealer_hand}")
 
-    # dealer draw cards
+    # TODO this should be a function
+    # dealer draw cards 3
     if dealer_hand < 16:
         dc3 = draw_card()
         dealer_card3 = dealer_card_value(dc3)
@@ -150,6 +159,7 @@ while True:
         else:
             print(f"Dealers hand {dc1} {dc2} {dc3} = {dealer_hand}")
 
+        # dealer draw cards 4
         if dealer_hand < 16:
             dc4 = draw_card()
             dealer_card4 = dealer_card_value(dc4)
@@ -160,6 +170,7 @@ while True:
             else:
                 print(f"Dealers hand {dc1} {dc2} {dc3} {dc4} = {dealer_hand}")
 
+            # dealer draw cards 5
             if dealer_hand < 16:
                 dc5 = draw_card()
                 dealer_card5 = dealer_card_value(dc5)
@@ -172,10 +183,10 @@ while True:
 
     if dealer_hand >= player_hand or player_hand > 21:
         print("Dealer wins (while_loop)")
-        # TODO money - bet
+        # TODO money -= bet
     else:
         print("Player wins (while_loop)")
-        # TODO money + bet
+        # TODO money += bet
 
 
     play = input("Play again?  y/n: ").lower()
