@@ -52,10 +52,10 @@ def dealer_card_value(card):
 
 def check_cards():
     if player_hand == 21:
-        print("BLACKJACK, player wins")
+        print("BLACKJACK, player wins (check_cards)")
 
     elif player_hand > 21:
-        print("Player Busted")
+        print("Player Busted (check_cards)")
 
 
 def place_bet(money):
@@ -171,10 +171,10 @@ while True:
                     print(f"Dealers hand {dc1} {dc2} {dc3} {dc4} {dc5} = {dealer_hand}")
 
     if dealer_hand >= player_hand or player_hand > 21:
-        print("Dealer wins")
+        print("Dealer wins (while_loop)")
         # TODO money - bet
     else:
-        print("Player wins")
+        print("Player wins (while_loop)")
         # TODO money + bet
 
 
