@@ -137,10 +137,11 @@ while True:
                         print(f"Player cards: {pc1} {pc2} {pc3} {pc4} {pc5}= {player_hand}")
                         check_cards()
 
-    # show dealer cards
+    # show dealer cards first two
     print(f"Dealers hand {dc1} {dc2} = {dealer_hand}")
 
-    # dealer draw cards
+    # TODO this should be a function
+    # dealer draw cards 3
     if dealer_hand < 16:
         dc3 = draw_card()
         dealer_card3 = dealer_card_value(dc3)
@@ -150,6 +151,7 @@ while True:
         else:
             print(f"Dealers hand {dc1} {dc2} {dc3} = {dealer_hand}")
 
+        # dealer draw cards 4
         if dealer_hand < 16:
             dc4 = draw_card()
             dealer_card4 = dealer_card_value(dc4)
@@ -160,6 +162,7 @@ while True:
             else:
                 print(f"Dealers hand {dc1} {dc2} {dc3} {dc4} = {dealer_hand}")
 
+            # dealer draw cards 5
             if dealer_hand < 16:
                 dc5 = draw_card()
                 dealer_card5 = dealer_card_value(dc5)
@@ -172,10 +175,10 @@ while True:
 
     if dealer_hand >= player_hand or player_hand > 21:
         print("Dealer wins (while_loop)")
-        # TODO money - bet
+        # TODO money -= bet
     else:
         print("Player wins (while_loop)")
-        # TODO money + bet
+        # TODO money += bet
 
 
     play = input("Play again?  y/n: ").lower()
