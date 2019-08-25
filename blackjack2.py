@@ -75,6 +75,7 @@ while True:
     # draw dealer cards
     dc1 = draw_card()
     dc2 = draw_card()
+    # TODO place_bet function
     bet = place_bet(money)
     print(f"\nPlayers hand {pc1} {pc2} Dealer showing a {dc1}\n")
 
