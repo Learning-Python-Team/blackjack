@@ -156,7 +156,7 @@ while True:
             dealer_hand += dealer_card4
             if dealer_hand > 21:
                 print(f"Dealers bust! {dc1} {dc2} {dc3} {dc4} = {dealer_hand} Player wins")
-                sys.exit()
+                continue
             else:
                 print(f"Dealers hand {dc1} {dc2} {dc3} {dc4} = {dealer_hand}")
 
@@ -166,7 +166,7 @@ while True:
                 dealer_hand += dealer_card5
                 if dealer_hand > 21:
                     print(f"Dealers bust! {dc1} {dc2} {dc3} {dc4} {dc5} Player wins")
-                    sys.exit()
+                    continue
                 else:
                     print(f"Dealers hand {dc1} {dc2} {dc3} {dc4} {dc5} = {dealer_hand}")
 
