@@ -58,6 +58,15 @@ def check_cards():
         print("Player Busted")
 
 
+def place_bet(money):
+    """place bet up to max on money"""
+    # TODO Place and calculate bet return bet
+    pass
+
+
+# add starting money
+money = 100
+
 while True:
     # draw player cards
     pc1 = draw_card()
@@ -66,7 +75,7 @@ while True:
     # draw dealer cards
     dc1 = draw_card()
     dc2 = draw_card()
-
+    bet = place_bet(money)
     print(f"\nPlayers hand {pc1} {pc2} Dealer showing a {dc1}\n")
 
     # convert values
@@ -162,8 +171,11 @@ while True:
 
     if dealer_hand >= player_hand or player_hand > 21:
         print("Dealer wins")
+        # TODO money - bet
     else:
         print("Player wins")
+        # TODO money + bet
+
 
     play = input("Play again?  y/n: ").lower()
     if play == 'n':
