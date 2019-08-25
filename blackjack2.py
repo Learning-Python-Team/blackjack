@@ -5,6 +5,9 @@
 # TODO dealer hand should be a function looping to draw more cards
 # TODO if player sticks should check if dealers hand is greater BEFORE dealer draws card
 
+# TODO there should be a single function that checks if theres a winner from each hand for the betting
+
+
 import random
 import sys
 
