@@ -52,11 +52,20 @@ def dealer_card_value(card):
 
 def check_cards():
     if player_hand == 21:
-        print("BLACKJACK, player wins")
+        print("BLACKJACK, player wins (check_cards)")
 
     elif player_hand > 21:
-        print("Player Busted")
+        print("Player Busted (check_cards)")
 
+
+def place_bet(money):
+    """place bet up to max on money"""
+    # TODO Place and calculate bet return bet
+    pass
+
+
+# add starting money
+money = 100
 
 while True:
     # draw player cards
@@ -66,7 +75,8 @@ while True:
     # draw dealer cards
     dc1 = draw_card()
     dc2 = draw_card()
-
+    # TODO place_bet function
+    bet = place_bet(money)
     print(f"\nPlayers hand {pc1} {pc2} Dealer showing a {dc1}\n")
 
     # convert values
@@ -146,7 +156,7 @@ while True:
             dealer_hand += dealer_card4
             if dealer_hand > 21:
                 print(f"Dealers bust! {dc1} {dc2} {dc3} {dc4} = {dealer_hand} Player wins")
-                sys.exit()
+                continue
             else:
                 print(f"Dealers hand {dc1} {dc2} {dc3} {dc4} = {dealer_hand}")
 
@@ -156,14 +166,17 @@ while True:
                 dealer_hand += dealer_card5
                 if dealer_hand > 21:
                     print(f"Dealers bust! {dc1} {dc2} {dc3} {dc4} {dc5} Player wins")
-                    sys.exit()
+                    continue
                 else:
                     print(f"Dealers hand {dc1} {dc2} {dc3} {dc4} {dc5} = {dealer_hand}")
 
     if dealer_hand >= player_hand or player_hand > 21:
-        print("Dealer wins")
+        print("Dealer wins (while_loop)")
+        # TODO money - bet
     else:
-        print("Player wins")
+        print("Player wins (while_loop)")
+        # TODO money + bet
+
 
     play = input("Play again?  y/n: ").lower()
     if play == 'n':
