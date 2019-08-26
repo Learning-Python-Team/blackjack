@@ -13,11 +13,15 @@ def deck():
     card_deck = []
     for suit in (HEARTS, DIAMONDS, SPADES, CLUBS):
         for rank in range(2, 11):
-            card_deck.append((str(suit), rank))
-        for face_card in ('A', 'J', 'Q', 'K'):
-            card_deck.append((str(suit), face_card))
+            card_deck.append((rank,str(suit)))
+        for face_cards in ('A', 'J', 'Q', 'K'):
+            card_deck.append((face_cards, str(suit)))
     random.shuffle(card_deck)
     return card_deck
 
 
-print(deck())
+deck = deck()
+
+print(deck)
+
+
