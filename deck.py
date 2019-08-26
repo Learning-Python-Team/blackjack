@@ -9,7 +9,7 @@ CLUBS = chr(9827)
 
 
 def deck():
-    """generates a deck of cards as a tuple (suit, rank)"""
+    """generates a deck of cards as a tuple (rank, suit)"""
     card_deck = []
     for suit in (HEARTS, DIAMONDS, SPADES, CLUBS):
         for rank in range(2, 11):
