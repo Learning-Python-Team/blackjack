@@ -114,7 +114,8 @@ while True:
             print()
             break
         else:
-            dealer_action(dealer_cards)
+            dealer_action(dealer_cards
+
     again = input("Play again? (Y)es or (N)o").upper()
     if again != "Y":
         break
