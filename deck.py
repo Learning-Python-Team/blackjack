@@ -72,7 +72,7 @@ def draw(cards):
     cards += (deck.pop(),)
     return cards
 
-
+"""
 # for testing
 deck = create_deck()
 player_cards = deck.pop(), deck.pop()
@@ -91,3 +91,4 @@ show_hand(player_cards, dealer_cards, True)
 
 player_cards = draw(player_cards)
 show_hand(player_cards, dealer_cards, True)
+"""
