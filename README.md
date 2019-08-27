@@ -13,14 +13,15 @@ comments directly in the file.
 
 *backjack* was our first draft: running with errors
 
-*blackjack2* is the current WIP: running
+*blackjack2*: running
 
 *deck* is a redesigned deck for the 3rd draft with suits (2♠ K♠ 9♦)
 - create deck - done
 - value cards - done
 
+*blackjack3* WIP rewrite moving card display and card drawing to functions: running
+
 - TODO
-- show hand
-- draw card(s)
-- get player action, bet, draw, stick, double-down
-- split on double down 
+- betting
+- cleanup win check move into function
+- add split hand for double down (after win check cleanup)
