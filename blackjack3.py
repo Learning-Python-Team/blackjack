@@ -108,9 +108,13 @@ while True:
 
         # allows player to hit or stick
         player_cards = player_action(player_cards)
+        # exit loop if busted on hits
         if cards_value(player_cards) > 21:
             print("Busted")
             print()
             break
         else:
             dealer_action(dealer_cards)
+    again = input("Play again? (Y)es or (N)o").upper()
+    if again != "Y":
+        break
