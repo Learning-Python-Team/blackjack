@@ -1,7 +1,5 @@
 import random
 
-# TODO turn this into class Deck
-
 HEARTS = chr(9829)
 DIAMONDS = chr(9830)
 SPADES = chr(9824)
@@ -92,7 +90,14 @@ def player_action(cards):
 
 
 def dealer_action(cards):
-    pass
+    show_hand(player_cards, cards, False)
+    while cards_value(cards) < 16:
+        cards = draw(cards)
+        show_hand(player_cards, cards, False)
+    if cards_value(cards) > 21:
+        print("Dealer busted")
+        print()
+    return cards
 
 
 deck = create_deck()
@@ -108,13 +113,24 @@ while True:
 
         # allows player to hit or stick
         player_cards = player_action(player_cards)
-        # exit loop if busted on hits
-        if cards_value(player_cards) > 21:
-            print("Busted")
-            print()
+
+        if cards_value(dealer_cards) <= 16:
+            dealer_cards = dealer_action(dealer_cards)
             break
-        else:
-            dealer_action(dealer_cards
+
+    if cards_value(player_cards) > 21:
+        show_hand(player_cards, dealer_cards, False)
+        print("Player busted\n")
+
+    elif cards_value(dealer_cards) > 21:
+        show_hand(player_cards, dealer_cards, False)
+        print("Dealer busted\n")
+    elif cards_value(player_cards) < cards_value(dealer_cards):
+        show_hand(player_cards, dealer_cards, False)
+        print("Dealer wins\n")
+    else:
+        show_hand(player_cards, dealer_cards, False)
+        print("Player wins\n")
 
     again = input("Play again? (Y)es or (N)o").upper()
     if again != "Y":
