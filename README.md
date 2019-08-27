@@ -15,4 +15,12 @@ comments directly in the file.
 
 *blackjack2* is the current WIP: running
 
-*deck* is a redesigned deck for the 3rd draft with suits (suit_icon, rank)
+*deck* is a redesigned deck for the 3rd draft with suits (2♠ K♠ 9♦)
+- create deck - done
+- value cards - done
+
+- TODO
+- show hand
+- draw card(s)
+- get player action, bet, draw, stick, double-down
+- split on double down 
