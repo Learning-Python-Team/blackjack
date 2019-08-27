@@ -94,9 +94,11 @@ def dealer_action(cards):
     while cards_value(cards) < 16:
         cards = draw(cards)
         show_hand(player_cards, cards, False)
+        """
     if cards_value(cards) > 21:
         print("Dealer busted")
         print()
+        """
     return cards
 
 
@@ -110,6 +112,7 @@ while True:
     while True:
         # display hands
         show_hand(player_cards, dealer_cards, True)
+        print()
 
         # allows player to hit or stick
         player_cards = player_action(player_cards)
@@ -117,19 +120,21 @@ while True:
         if cards_value(dealer_cards) <= 16:
             dealer_cards = dealer_action(dealer_cards)
             break
+        if cards_value(dealer_cards) > 16:
+            break
 
     if cards_value(player_cards) > 21:
-        show_hand(player_cards, dealer_cards, False)
+        #show_hand(player_cards, dealer_cards, False)
         print("Player busted\n")
 
     elif cards_value(dealer_cards) > 21:
-        show_hand(player_cards, dealer_cards, False)
+        #show_hand(player_cards, dealer_cards, False)
         print("Dealer busted\n")
     elif cards_value(player_cards) < cards_value(dealer_cards):
-        show_hand(player_cards, dealer_cards, False)
+        #show_hand(player_cards, dealer_cards, False)
         print("Dealer wins\n")
     else:
-        show_hand(player_cards, dealer_cards, False)
+        #show_hand(player_cards, dealer_cards, False)
         print("Player wins\n")
 
     again = input("Play again? (Y)es or (N)o").upper()
