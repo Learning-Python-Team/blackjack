@@ -87,14 +87,16 @@ def player_action(cards):
     :return: cards after draw
     """
     # TODO break this into functions by action
-    print("debug", cards)
     # check if cards are the same and offer split, tested
-    if cards[0][0] == cards[1][0]:
-        print("Split? (Y)es (N)o")
-        split = input().upper()
-        # TODO figure out how to process a second player hand with 1 card each
-        if split == 'Y':
-            split_cards(cards)
+    try:
+        if cards[0][0] == cards[1][0]:
+            print("Split? (Y)es (N)o")
+            split = input().upper()
+            # TODO figure out how to process a second player hand with 1 card each
+            if split == 'Y':
+                split_cards(cards)
+    except IndexError:
+        cards = draw(cards)
 
     # checks if first two cards are a natural 21, tested
     if cards_value(cards) == 21:
@@ -102,6 +104,7 @@ def player_action(cards):
         return cards
 
     # checks for 9, 10 , 11 for double down
+    # TODO account for aces
     if cards_value(cards) in (9, 10, 11):
         # player doubles bet
         print("(D)ouble down?")
@@ -130,9 +133,10 @@ def split_cards(cards):
     # TODO figure out how to process second hand
     player_card_one, player_card_two = cards
     print(player_card_one, player_card_two, "splitting")
-    player_one_cards = player_action(player_card_one)
-    player_two_cards = player_action(player_card_two)
-    show_hand("debug DD:", player_one_cards, player_two_cards, dealer_cards)
+    player_one_cards = player_card_one, deck.pop()
+    player_two_cards = player_card_two, deck.pop()
+    show_hand(player_one_cards, dealer_cards, False)
+    show_hand(player_two_cards, dealer_cards, False)
     return player_one_cards
 
 
