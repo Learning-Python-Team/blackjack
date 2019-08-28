@@ -11,9 +11,12 @@ def create_deck():
     card_deck = []
     # create a 6 deck shoe
     for x in range(6):
+        # for each suit
         for suit in (HEARTS, DIAMONDS, SPADES, CLUBS):
+            # create normal cards
             for rank in range(2, 11):
                 card_deck.append((str(rank) + str(suit)))
+            # create face cards
             for face_cards in ('A', 'J', 'Q', 'K'):
                 card_deck.append((str(face_cards) + str(suit)))
 
@@ -98,6 +101,15 @@ def player_action(cards):
     if cards_value(cards) == 21:
         # return cards
         return cards
+
+    # checks for 9, 10 , 11 for double down
+    if cards_value(cards) in (9, 10, 11):
+        # plauer doubles bet
+        print("(D)ouble down?")
+        double = input().upper()
+        if double == 'D':
+            cards = draw(cards)
+            return cards
 
     while True:
         print("(H)it, (S)tick")
