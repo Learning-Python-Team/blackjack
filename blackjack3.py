@@ -94,8 +94,7 @@ def player_action(cards):
         split = input().upper()
         # TODO figure out how to process a second player hand with 1 card each
         if split == 'Y':
-            player_card_one, player_card_two = cards
-            print(player_card_one, player_card_two, "splitting")
+            split_cards(cards)
 
     # checks if first two cards are a natural 21, tested
     if cards_value(cards) == 21:
@@ -104,10 +103,11 @@ def player_action(cards):
 
     # checks for 9, 10 , 11 for double down
     if cards_value(cards) in (9, 10, 11):
-        # plauer doubles bet
+        # player doubles bet
         print("(D)ouble down?")
         double = input().upper()
         if double == 'D':
+            # bet should be doubled
             cards = draw(cards)
             return cards
 
@@ -121,8 +121,19 @@ def player_action(cards):
                 return cards
         if action == "S":
             break
-    # return cards
+    # return cards with drawn cards
     return cards
+
+
+def split_cards(cards):
+    """create two hands of cards"""
+    # TODO figure out how to process second hand
+    player_card_one, player_card_two = cards
+    print(player_card_one, player_card_two, "splitting")
+    player_one_cards = player_action(player_card_one)
+    player_two_cards = player_action(player_card_two)
+    show_hand("debug DD:", player_one_cards, player_two_cards, dealer_cards)
+    return player_one_cards
 
 
 def dealer_action(cards):
@@ -130,7 +141,7 @@ def dealer_action(cards):
     # dealer keeps drawing cards until total value is over 16
     while cards_value(cards) < 16:
         cards = draw(cards)
-
+    # return cards with drawn cards
     return cards
 
 
