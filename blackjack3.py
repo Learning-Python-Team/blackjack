@@ -90,8 +90,7 @@ def player_action(cards):
     # check if cards are the same and offer split, tested
     try:
         if cards[0][0] == cards[1][0]:
-            print("Split? (Y)es (N)o")
-            split = input().upper()
+            split = input("Split? (Y)es (N)o").upper()
             # TODO figure out how to process a second player hand with 1 card each
             if split == 'Y':
                 split_cards(cards)
@@ -107,16 +106,14 @@ def player_action(cards):
     # TODO account for aces
     if cards_value(cards) in (9, 10, 11):
         # player doubles bet
-        print("(D)ouble down?")
-        double = input().upper()
+        double = input("(D)ouble down?").upper()
         if double == 'D':
             # bet should be doubled
             cards = draw(cards)
             return cards
 
     while True:
-        print("(H)it, (S)tick")
-        action = input().upper()
+        action = input("(H)it, (S)tick").upper()
         if action == "H":
             cards = draw(cards)
             show_hand(cards, dealer_cards, True)
