@@ -109,7 +109,7 @@ def player_action(cards):
         # player doubles bet
         double = input("(D)ouble down?").upper()
         if double == 'D':
-            # bet should be doubled
+            # TODO bet should be doubled
             cards = draw(cards)
             return cards
     elif "A" in cards:
