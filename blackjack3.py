@@ -112,6 +112,7 @@ def player_action(cards):
             # TODO bet should be doubled
             cards = draw(cards)
             return cards
+
     elif "A" in cards:
         print("ace in double down")
 
@@ -133,10 +134,13 @@ def split_cards(cards):
     # TODO figure out how to process second hand
     player_card_one, player_card_two = cards
     print(player_card_one, player_card_two, "splitting")
+
     player_one_cards = player_card_one, deck.pop()
     player_two_cards = player_card_two, deck.pop()
+
     show_hand(player_one_cards, dealer_cards, False)
     show_hand(player_two_cards, dealer_cards, False)
+
     return player_one_cards
 
 
@@ -150,6 +154,12 @@ def dealer_action(cards):
 
 
 def check_win(wager, cash):
+    """checks various win conditions
+
+    :param wager: amount of bet
+    :param cash: amount of money player has
+    :return:
+    """
     if len(player_cards) == 2 and cards_value(player_cards) == 21:
         # player wins 1.5 * bet
         cash += int(wager) * 1.5
