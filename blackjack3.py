@@ -81,7 +81,7 @@ def player_action(cards):
     """allows player to hit or stick
 
     :param cards:
-    :return: cards after draw, natural: T/F
+    :return: cards after draw
     """
     # TODO break this into functions by action
     print("debug", cards)
@@ -109,7 +109,7 @@ def player_action(cards):
                 return cards
         if action == "S":
             break
-    # return cards, natural
+    # return cards
     return cards
 
 
