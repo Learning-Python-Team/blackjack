@@ -149,35 +149,51 @@ def dealer_action(cards):
     return cards
 
 
-def check_win(bet):
+def check_win(bet, money):
     if len(player_cards) == 2 and cards_value(player_cards) == 21:
         # player wins 1.5 * bet
+        money += int(bet) * 1.5
         print("Player wins with a natural 21\n")
+        print(money)
+        return money
 
     elif cards_value(player_cards) > 21:
         show_hand(player_cards, dealer_cards, False)
         # player loses bet
+        money -= int(bet)
         print("Player busted\n")
+        print(money)
+        return money
 
     elif cards_value(dealer_cards) > 21:
         show_hand(player_cards, dealer_cards, False)
         # player wins bet
+        money += int(bet)
         print("Dealer busted\n")
+        print(money)
+        return money
+
 
     elif cards_value(player_cards) < cards_value(dealer_cards):
         show_hand(player_cards, dealer_cards, False)
         # player loses bet
+        money -= int(bet)
         print("Dealer wins\n")
+        return money
 
     elif cards_value(player_cards) == cards_value(dealer_cards):
         # bet should be added to pot
         show_hand(player_cards, dealer_cards, False)
         print("Player and dealer tied, pushing bet")
-
+        print(money)
+        return money
     else:
         # player wins bet
         show_hand(player_cards, dealer_cards, False)
+        money += int(bet)
         print("Player wins\n")
+        print(money)
+        return money
 
 
 if __name__ == '__main__':
@@ -190,7 +206,6 @@ if __name__ == '__main__':
             print("You're broke, thanks for playing")
             sys.exit()
         bet = input(f"How much do you want to wager, up to {money}? ")
-        money -= int(bet)
         print(money)
         # gets first two cards for player and dealer
         player_cards = deck.pop(), deck.pop()
@@ -212,7 +227,7 @@ if __name__ == '__main__':
             if cards_value(dealer_cards) >= 16:
                 break
 
-        check_win(bet)
+        money = check_win(bet, money)
 
         again = input("Play again? (Y)es or (N)o").upper()
         if again == "N":
