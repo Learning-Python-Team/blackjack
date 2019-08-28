@@ -149,49 +149,50 @@ def dealer_action(cards):
     return cards
 
 
-def check_win(bet, cash):
+def check_win(wager, cash):
     if len(player_cards) == 2 and cards_value(player_cards) == 21:
         # player wins 1.5 * bet
-        cash += int(bet) * 1.5
+        cash += int(wager) * 1.5
         print("Player wins with a natural 21\n")
-        print(cash)
+        print("debug", cash)
         return cash
 
     elif cards_value(player_cards) > 21:
         show_hand(player_cards, dealer_cards, False)
         # player loses bet
-        cash -= int(bet)
+        cash -= int(wager)
         print("Player busted\n")
-        print(cash)
+        print("debug", cash)
         return cash
 
     elif cards_value(dealer_cards) > 21:
         show_hand(player_cards, dealer_cards, False)
         # player wins bet
-        cash += int(bet)
+        cash += int(wager)
         print("Dealer busted\n")
-        print(cash)
+        print("debug", cash)
         return cash
 
     elif cards_value(player_cards) < cards_value(dealer_cards):
         show_hand(player_cards, dealer_cards, False)
         # player loses bet
-        cash -= int(bet)
+        cash -= int(wager)
         print("Dealer wins\n")
+        print("debug", cash)
         return cash
 
     elif cards_value(player_cards) == cards_value(dealer_cards):
         # bet should be added to pot
         show_hand(player_cards, dealer_cards, False)
         print("Player and dealer tied, pushing bet")
-        print(cash)
+        print("debug", cash)
         return cash
     else:
         # player wins bet
         show_hand(player_cards, dealer_cards, False)
-        cash += int(bet)
+        cash += int(wager)
         print("Player wins\n")
-        print(cash)
+        print("debug", cash)
         return cash
 
 
