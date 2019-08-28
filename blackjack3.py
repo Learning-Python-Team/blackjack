@@ -1,4 +1,5 @@
 import random
+import sys
 
 HEARTS = chr(9829)
 DIAMONDS = chr(9830)
@@ -148,7 +149,7 @@ def dealer_action(cards):
     return cards
 
 
-def check_win():
+def check_win(bet):
     if len(player_cards) == 2 and cards_value(player_cards) == 21:
         # player wins 1.5 * bet
         print("Player wins with a natural 21\n")
@@ -180,10 +181,17 @@ def check_win():
 
 
 if __name__ == '__main__':
-
+    money = 100
+    pot = 0
     deck = create_deck()
 
     while True:
+        if money == 0:
+            print("You're broke, thanks for playing")
+            sys.exit()
+        bet = input(f"How much do you want to wager, up to {money}? ")
+        money -= int(bet)
+        print(money)
         # gets first two cards for player and dealer
         player_cards = deck.pop(), deck.pop()
         dealer_cards = deck.pop(), deck.pop()
@@ -204,7 +212,7 @@ if __name__ == '__main__':
             if cards_value(dealer_cards) >= 16:
                 break
 
-        check_win()
+        check_win(bet)
 
         again = input("Play again? (Y)es or (N)o").upper()
         if again == "N":
