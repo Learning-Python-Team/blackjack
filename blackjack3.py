@@ -8,14 +8,17 @@ CLUBS = chr(9827)
 
 def create_deck():
     """generates a deck of cards (rank_suit)"""
-    # TODO maka a 6 deck shoe
     card_deck = []
-
-    for suit in (HEARTS, DIAMONDS, SPADES, CLUBS):
-        for rank in range(2, 11):
-            card_deck.append((str(rank) + str(suit)))
-        for face_cards in ('A', 'J', 'Q', 'K'):
-            card_deck.append((str(face_cards) + str(suit)))
+    # create a 6 deck shoe
+    for x in range(6):
+        # for each suit
+        for suit in (HEARTS, DIAMONDS, SPADES, CLUBS):
+            # create normal cards
+            for rank in range(2, 11):
+                card_deck.append((str(rank) + str(suit)))
+            # create face cards
+            for face_cards in ('A', 'J', 'Q', 'K'):
+                card_deck.append((str(face_cards) + str(suit)))
 
     random.shuffle(card_deck)
     return card_deck
@@ -81,23 +84,35 @@ def player_action(cards):
     """allows player to hit or stick
 
     :param cards:
-    :return: cards after draw, natural: T/F
+    :return: cards after draw
     """
     # TODO break this into functions by action
-    print("debug", cards)
     # check if cards are the same and offer split, tested
-    if cards[0][0] == cards[1][0]:
-        print("Split? (Y)es (N)o")
-        split = input().upper()
-        # TODO figure out how to process a second player hand with 1 card each
-        if split == 'Y':
-            player_card_one, player_card_two = cards
-            print(player_card_one, player_card_two, "splitting")
+    try:
+        if cards[0][0] == cards[1][0]:
+            print("Split? (Y)es (N)o")
+            split = input().upper()
+            # TODO figure out how to process a second player hand with 1 card each
+            if split == 'Y':
+                split_cards(cards)
+    except IndexError:
+        cards = draw(cards)
 
     # checks if first two cards are a natural 21, tested
     if cards_value(cards) == 21:
         # return cards
         return cards
+
+    # checks for 9, 10 , 11 for double down
+    # TODO account for aces
+    if cards_value(cards) in (9, 10, 11):
+        # player doubles bet
+        print("(D)ouble down?")
+        double = input().upper()
+        if double == 'D':
+            # bet should be doubled
+            cards = draw(cards)
+            return cards
 
     while True:
         print("(H)it, (S)tick")
@@ -109,18 +124,28 @@ def player_action(cards):
                 return cards
         if action == "S":
             break
-    # return cards, natural
+    # return cards with drawn cards
     return cards
+
+
+def split_cards(cards):
+    """create two hands of cards"""
+    # TODO figure out how to process second hand
+    player_card_one, player_card_two = cards
+    print(player_card_one, player_card_two, "splitting")
+    player_one_cards = player_card_one, deck.pop()
+    player_two_cards = player_card_two, deck.pop()
+    show_hand(player_one_cards, dealer_cards, False)
+    show_hand(player_two_cards, dealer_cards, False)
+    return player_one_cards
 
 
 def dealer_action(cards):
     """dealer draws cards"""
-    show_hand(player_cards, cards, False)
     # dealer keeps drawing cards until total value is over 16
     while cards_value(cards) < 16:
         cards = draw(cards)
-        show_hand(player_cards, cards, False)
-
+    # return cards with drawn cards
     return cards
 
 
@@ -152,19 +177,25 @@ while True:
         print("Player wins with a natural 21\n")
 
     elif cards_value(player_cards) > 21:
+        show_hand(player_cards, dealer_cards, False)
         print("Player busted\n")
 
     elif cards_value(dealer_cards) > 21:
+        show_hand(player_cards, dealer_cards, False)
         print("Dealer busted\n")
 
     elif cards_value(player_cards) < cards_value(dealer_cards):
+        show_hand(player_cards, dealer_cards, False)
+        # player loses bet
         print("Dealer wins\n")
 
     elif cards_value(player_cards) == cards_value(dealer_cards):
         # bet should be added to pot
+        show_hand(player_cards, dealer_cards, False)
         print("Player and dealer tied, pushing bet")
 
     else:
+        # player wins bet
         show_hand(player_cards, dealer_cards, False)
         print("Player wins\n")
 
