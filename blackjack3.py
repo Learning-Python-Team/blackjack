@@ -74,17 +74,22 @@ def player_action(cards):
     """allows player to hit or stick
 
     :param cards:
-    :return: cards after draw
+    :return: cards after draw, natural: T/F
     """
     print("debug", cards)
+    # check if cards are the same and offer split
     if cards[0][0] == cards[1][0]:
         print("Split? (Y)es (N)o")
         split = input().upper()
-        # TODO figure out how to create a second player hand with 1 card each
+        # TODO figure out how to process a second player hand with 1 card each
         if split == 'Y':
             player_card_one, player_card_two = cards
             print(player_card_one, player_card_two, "splitting")
-
+    
+    # checks if first two cards are a natura; 21
+    if cards_value(cards) == 21:
+        # return cards, natural
+        return cards, True
 
     while True:
         print("(H)it, (S)tick")
@@ -96,7 +101,8 @@ def player_action(cards):
                 return cards
         if action == "S":
             break
-    return cards
+    # return cards, natural
+    return cards, False
 
 
 def dealer_action(cards):
@@ -123,7 +129,7 @@ while True:
         print()
 
         # allows player to hit or stick
-        player_cards = player_action(player_cards)
+        player_cards, natural = player_action(player_cards)
 
         # dealer draws card if total card value is less than 16
         if cards_value(dealer_cards) < 16:
@@ -132,7 +138,11 @@ while True:
         if cards_value(dealer_cards) >= 16:
             break
 
-    if cards_value(player_cards) > 21:
+    if natural:
+        # player wins 1.5 * bet
+        print("Player wins with a natural 21\n")
+
+    elif cards_value(player_cards) > 21:
         print("Player busted\n")
 
     elif cards_value(dealer_cards) > 21:
