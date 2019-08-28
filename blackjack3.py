@@ -149,29 +149,7 @@ def dealer_action(cards):
     return cards
 
 
-deck = create_deck()
-
-while True:
-    # gets first two cards for player and dealer
-    player_cards = deck.pop(), deck.pop()
-    dealer_cards = deck.pop(), deck.pop()
-
-    while True:
-        # display hands
-        show_hand(player_cards, dealer_cards, True)
-        print()
-
-        # allows player to hit or stick
-        player_cards = player_action(player_cards)
-
-        # dealer draws card if total card value is less than 16
-        if cards_value(dealer_cards) < 16:
-            dealer_cards = dealer_action(dealer_cards)
-            break
-
-        if cards_value(dealer_cards) >= 16:
-            break
-
+def check_win():
     if len(player_cards) == 2 and cards_value(player_cards) == 21:
         # player wins 1.5 * bet
         print("Player wins with a natural 21\n")
@@ -198,6 +176,32 @@ while True:
         # player wins bet
         show_hand(player_cards, dealer_cards, False)
         print("Player wins\n")
+
+
+deck = create_deck()
+
+while True:
+    # gets first two cards for player and dealer
+    player_cards = deck.pop(), deck.pop()
+    dealer_cards = deck.pop(), deck.pop()
+
+    while True:
+        # display hands
+        show_hand(player_cards, dealer_cards, True)
+        print()
+
+        # allows player to hit or stick
+        player_cards = player_action(player_cards)
+
+        # dealer draws card if total card value is less than 16
+        if cards_value(dealer_cards) < 16:
+            dealer_cards = dealer_action(dealer_cards)
+            break
+
+        if cards_value(dealer_cards) >= 16:
+            break
+
+    check_win()
 
     again = input("Play again? (Y)es or (N)o").upper()
     if again == "N":
