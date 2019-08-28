@@ -31,16 +31,21 @@ def cards_value(cards):
     card_value = 0
     aces = 0
     for card in cards:
+        # convert face cards to 10
         if card[0] in ['J', 'Q', 'K']:
             card_value += 10
-        elif card[0] == '1' and card[1] == '0':
+        # hack for 10 to allow for the extra character
+        elif card[0:2] == '10':
             card_value += 10
+        # count aces
         elif card[0] == 'A':
             aces += 1
+        # assign regular cards values
         else:
             card_value += int(card[0])
 
     for ace in range(aces):
+        # aces are 11 unless it pushed total over 21
         if card_value + 11 <= 21:
             card_value += 11
         else:
