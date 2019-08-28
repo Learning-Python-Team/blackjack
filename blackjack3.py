@@ -8,14 +8,14 @@ CLUBS = chr(9827)
 
 def create_deck():
     """generates a deck of cards (rank_suit)"""
-    # TODO maka a 6 deck shoe
     card_deck = []
-
-    for suit in (HEARTS, DIAMONDS, SPADES, CLUBS):
-        for rank in range(2, 11):
-            card_deck.append((str(rank) + str(suit)))
-        for face_cards in ('A', 'J', 'Q', 'K'):
-            card_deck.append((str(face_cards) + str(suit)))
+    # create a 6 deck shoe
+    for x in range(6):
+        for suit in (HEARTS, DIAMONDS, SPADES, CLUBS):
+            for rank in range(2, 11):
+                card_deck.append((str(rank) + str(suit)))
+            for face_cards in ('A', 'J', 'Q', 'K'):
+                card_deck.append((str(face_cards) + str(suit)))
 
     random.shuffle(card_deck)
     return card_deck
@@ -115,11 +115,9 @@ def player_action(cards):
 
 def dealer_action(cards):
     """dealer draws cards"""
-    show_hand(player_cards, cards, False)
     # dealer keeps drawing cards until total value is over 16
     while cards_value(cards) < 16:
         cards = draw(cards)
-        show_hand(player_cards, cards, False)
 
     return cards
 
@@ -152,19 +150,25 @@ while True:
         print("Player wins with a natural 21\n")
 
     elif cards_value(player_cards) > 21:
+        show_hand(player_cards, dealer_cards, False)
         print("Player busted\n")
 
     elif cards_value(dealer_cards) > 21:
+        show_hand(player_cards, dealer_cards, False)
         print("Dealer busted\n")
 
     elif cards_value(player_cards) < cards_value(dealer_cards):
+        show_hand(player_cards, dealer_cards, False)
+        # player loses bet
         print("Dealer wins\n")
 
     elif cards_value(player_cards) == cards_value(dealer_cards):
         # bet should be added to pot
+        show_hand(player_cards, dealer_cards, False)
         print("Player and dealer tied, pushing bet")
 
     else:
+        # player wins bet
         show_hand(player_cards, dealer_cards, False)
         print("Player wins\n")
 
