@@ -102,15 +102,17 @@ def player_action(cards):
         # return cards
         return cards
 
-    # checks for 9, 10 , 11 for double down
-    # TODO account for aces
-    if cards_value(cards) in (9, 10, 11):
+    # checks for 9, 10 , 11 for double down, also checks for aces with default value of 11, tested
+    if cards_value(cards) in (9, 10, 11) or (
+            cards_value(cards) in (19, 20, 21) and (cards[0][0] == 'A' or cards[1][0] == 'A')):
         # player doubles bet
         double = input("(D)ouble down?").upper()
         if double == 'D':
             # bet should be doubled
             cards = draw(cards)
             return cards
+    elif "A" in cards:
+        print("ace in double down")
 
     while True:
         action = input("(H)it, (S)tick").upper()
