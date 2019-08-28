@@ -155,10 +155,12 @@ def check_win():
 
     elif cards_value(player_cards) > 21:
         show_hand(player_cards, dealer_cards, False)
+        # player loses bet
         print("Player busted\n")
 
     elif cards_value(dealer_cards) > 21:
         show_hand(player_cards, dealer_cards, False)
+        # player wins bet
         print("Dealer busted\n")
 
     elif cards_value(player_cards) < cards_value(dealer_cards):
