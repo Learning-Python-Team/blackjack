@@ -11,12 +11,16 @@ CLUBS = chr(9827)
 def create_deck():
     """generates a deck of cards (rank_suit)"""
     card_deck = []
-
-    for suit in (HEARTS, DIAMONDS, SPADES, CLUBS):
-        for rank in range(2, 11):
-            card_deck.append((str(rank) + str(suit)))
-        for face_cards in ('A', 'J', 'Q', 'K'):
-            card_deck.append((str(face_cards) + str(suit)))
+    # create a 6 deck shoe
+    for x in range(6):
+        # for each suit
+        for suit in (HEARTS, DIAMONDS, SPADES, CLUBS):
+            # create normal cards
+            for rank in range(2, 11):
+                card_deck.append((str(rank) + str(suit)))
+            # create face cards
+            for face_cards in ('A', 'J', 'Q', 'K'):
+                card_deck.append((str(face_cards) + str(suit)))
 
     random.shuffle(card_deck)
     return card_deck
