@@ -13,11 +13,10 @@ comments directly in the file.
 #### *blackjack3.py* 
 WIP rewrite moving card display and card drawing to functions: running
 ####TODO
-- betting
-- cleanup win check 
+- betting WIP
+
 - fix second hand draw for split function
-- add split hand for double down (after win check cleanup)
-- account for ace values in double down
+
 
 *blackjack2*: second draft, old deck, running
 
