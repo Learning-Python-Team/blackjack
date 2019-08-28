@@ -33,7 +33,7 @@ def cards_value(cards):
         if card[0] in ['J', 'Q', 'K']:
             card_value += 10
         # hack for 10 to allow for the extra character
-        elif card[0] == '1' and card[1] == '0':
+        elif card[0:2] == '10':
             card_value += 10
         # count aces
         elif card[0] == 'A':
@@ -177,31 +177,33 @@ def check_win():
         print("Player wins\n")
 
 
-deck = create_deck()
+if __name__ == '__main__':
 
-while True:
-    # gets first two cards for player and dealer
-    player_cards = deck.pop(), deck.pop()
-    dealer_cards = deck.pop(), deck.pop()
+    deck = create_deck()
 
     while True:
-        # display hands
-        show_hand(player_cards, dealer_cards, True)
-        print()
+        # gets first two cards for player and dealer
+        player_cards = deck.pop(), deck.pop()
+        dealer_cards = deck.pop(), deck.pop()
 
-        # allows player to hit or stick
-        player_cards = player_action(player_cards)
+        while True:
+            # display hands
+            show_hand(player_cards, dealer_cards, True)
+            print()
 
-        # dealer draws card if total card value is less than 16
-        if cards_value(dealer_cards) < 16:
-            dealer_cards = dealer_action(dealer_cards)
+            # allows player to hit or stick
+            player_cards = player_action(player_cards)
+
+            # dealer draws card if total card value is less than 16
+            if cards_value(dealer_cards) < 16:
+                dealer_cards = dealer_action(dealer_cards)
+                break
+
+            if cards_value(dealer_cards) >= 16:
+                break
+
+        check_win()
+
+        again = input("Play again? (Y)es or (N)o").upper()
+        if again == "N":
             break
-
-        if cards_value(dealer_cards) >= 16:
-            break
-
-    check_win()
-
-    again = input("Play again? (Y)es or (N)o").upper()
-    if again == "N":
-        break
