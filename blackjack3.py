@@ -115,27 +115,14 @@ def player_action(cards, wager):
     return cards, wager
 
 
-def split_cards(cards):
-    """create two hands of cards"""
-    # TODO figure out how to process second hand
-    player_card_one, player_card_two = cards
-    print(player_card_one, player_card_two, "splitting")
-
-    player_one_cards = player_card_one, deck.pop()
-    player_two_cards = player_card_two, deck.pop()
-
-    show_hand(player_one_cards, dealer_cards, False)
-    show_hand(player_two_cards, dealer_cards, False)
-
-    return player_one_cards
-
-
 def dealer_action(cards):
-    """dealer draws cards"""
-    # dealer keeps drawing cards until total value is over 16
+    """dealer keeps drawing cards until total value is over 16
+
+    :param cards:
+    :return: dealer hand
+    """
     while cards_value(cards) < 16:
         cards = draw(cards)
-    # return cards with drawn cards
     return cards
 
 
