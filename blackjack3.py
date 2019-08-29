@@ -87,28 +87,13 @@ def player_action(cards, wager):
     :param cards:player cards
     :return: cards after draw
     """
-    # TODO break this into functions by action
-    # check if cards are the same and offer split, tested
-    try:
-        if cards[0][0] == cards[1][0]:
-            split = input("Split? (Y)es (N)o").upper()
-            # TODO figure out how to process a second player hand with 1 card each
-            if split == 'Y':
-                split_cards(cards)
 
-    # draw second card on split
-    except IndexError:
-        cards = draw(cards)
-
-    # checks if first two cards are a natural 21, tested
     if cards_value(cards) == 21:
-        # return cards
         return cards, wager
 
-    # checks for 9, 10 , 11 for double down, also checks for aces with default value of 11, tested
+    # checks for 9, 10 , 11 for double down, also checks for aces with default value of 11
     if cards_value(cards) in (9, 10, 11) or (
             cards_value(cards) in (19, 20, 21) and (cards[0][0] == 'A' or cards[1][0] == 'A')):
-        # player doubles bet
         double = input("(D)ouble down?").upper()
         if double == 'D':
             wager = int(wager) * 2
@@ -127,7 +112,6 @@ def player_action(cards, wager):
                 return cards, wager
         if action == "S":
             break
-    # return cards with drawn cards
     return cards, wager
 
 
