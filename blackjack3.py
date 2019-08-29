@@ -1,6 +1,6 @@
 import random
 import sys
-
+# import pysnooper
 
 HEARTS = chr(9829)
 DIAMONDS = chr(9830)
@@ -81,9 +81,10 @@ def draw(cards):
     cards += (deck.pop(),)
     return cards
 
-
+#@pysnooper.snoop()
 def player_action(cards, wager, cash):
     """allows player to hit or stick
+    :param cash:
     :param wager: bet
     :param cards:player cards
     :return: cards after draw
@@ -103,10 +104,11 @@ def player_action(cards, wager, cash):
                 return cards, wager
             else:
                 return cards, wager
+    cards, wager = hit_stick(cards, wager)
+    return cards, wager
 
-    elif "A" in cards:
-        print("ace in double down")
 
+def hit_stick(cards, wager):
     while True:
         action = input("(H)it, (S)tick").upper()
         if action == "H":
@@ -130,48 +132,50 @@ def dealer_action(cards):
     return cards
 
 
-def check_win(wager, cash, total_pot):
-    """checks various win conditions
-
+def check_win(wager, cash, total_pot, player_crds, dealer_crds):
+    """ checks various win conditions
+    
     :param wager: amount of bet
     :param cash: total player money
-    :param total_pot: pot carried over from ties
-    :return:
+    :param total_pot: pot from pushing
+    :param player_crds: 
+    :param dealer_crds: 
+    :return: 
     """
     # player has 2 cards totaling 21 player wins 1.5 * bet
-    if len(player_cards) == 2 and cards_value(player_cards) == 21:
+    if len(player_crds) == 2 and cards_value(player_crds) == 21:
         cash += int((int(wager) * 1.5)) + total_pot
         total_pot = 0
         print("Player wins with a natural 21\n")
         return cash, total_pot
 
     # player loses bet
-    elif cards_value(player_cards) > 21:
-        show_hand(player_cards, dealer_cards, False)
+    elif cards_value(player_crds) > 21:
+        show_hand(player_crds, dealer_crds, False)
         cash -= int(wager)
         total_pot = 0
         print("Player busted\n")
         return cash, total_pot
 
     # player wins bet
-    elif cards_value(dealer_cards) > 21:
-        show_hand(player_cards, dealer_cards, False)
+    elif cards_value(dealer_crds) > 21:
+        show_hand(player_crds, dealer_crds, False)
         cash += int(wager) + total_pot
         total_pot = 0
         print("Dealer busted\n")
         return cash, total_pot
 
     # player loses bet
-    elif cards_value(player_cards) < cards_value(dealer_cards):
-        show_hand(player_cards, dealer_cards, False)
+    elif cards_value(player_crds) < cards_value(dealer_crds):
+        show_hand(player_crds, dealer_crds, False)
         cash -= int(wager)
         total_pot = 0
         print("Dealer wins\n")
         return cash, total_pot
 
     # bet should be added to pot
-    elif cards_value(player_cards) == cards_value(dealer_cards):
-        show_hand(player_cards, dealer_cards, False)
+    elif cards_value(player_crds) == cards_value(dealer_crds):
+        show_hand(player_crds, dealer_crds, False)
         print("Player and dealer tied, pushing bet")
         cash -= int(wager)
         total_pot = int(wager) * 2
@@ -179,7 +183,7 @@ def check_win(wager, cash, total_pot):
 
     # player wins bet
     else:
-        show_hand(player_cards, dealer_cards, False)
+        show_hand(player_crds, dealer_crds, False)
         cash += int(wager) + total_pot
         total_pot = 0
         print("Player wins\n")
@@ -188,15 +192,38 @@ def check_win(wager, cash, total_pot):
 
 def get_bet(cash):
     while True:
-        bet = input(f"How much do you want to wager, up to {cash}? Or (Q)uit").upper()
-        if bet == "Q":
+        wager = input(f"How much do you want to wager, up to {cash}? Or (Q)uit").upper()
+        if wager == "Q":
             print("Thanks for playing")
             sys.exit()
-        if not bet.isdigit():
+        if not wager.isdigit():
             continue
-        bet = int(bet)
-        if bet <= cash:
-            return bet
+        wager = int(wager)
+        if wager <= cash:
+            return wager
+
+
+# @pysnooper.snoop()
+def split_cards(cards, wager, cash, pot, dealer_cards):
+    # Draw second card for each half of split
+    hand1 = (cards[0],deck.pop(), )
+    hand2 = (cards[1],deck.pop(), )
+
+    # process hand 1
+    print("Hand1")
+    show_hand(hand1, dealer_cards, True)
+    hand1, wager = hit_stick(hand1, wager)
+    dealer_cards = dealer_action(dealer_cards)
+    show_hand(hand1, dealer_cards, False)
+    cash, pot = check_win(wager, cash, pot, hand1, dealer_cards)
+
+    print("Hand2")
+    show_hand(hand2, dealer_cards, False)
+    hand2, wager = hit_stick(hand2, wager)
+    show_hand(hand2, dealer_cards, False)
+    cash, pot = check_win(wager, cash, pot, hand2, dealer_cards)
+
+    return cash, pot
 
 
 if __name__ == '__main__':
@@ -212,7 +239,10 @@ if __name__ == '__main__':
         bet = get_bet(money)
 
         # gets first two cards for player and dealer
+
         player_cards = deck.pop(), deck.pop()
+        # player_cards = ('9♠', '9♦')  # for testing splits
+
         dealer_cards = deck.pop(), deck.pop()
 
         while True:
@@ -220,17 +250,23 @@ if __name__ == '__main__':
             show_hand(player_cards, dealer_cards, True)
             print()
 
-            # allows player to hit or stick
-            player_cards, bet = player_action(player_cards, bet, money)
+            # if cards match offer split
+            if player_cards[0][0] == player_cards[1][0]:
+                split = input("(S)plit?").upper()
+                if split == 'S':
+                    money, pot = split_cards(player_cards, bet, money, pot, dealer_cards)
+                    break
 
-            # dealer draws card if total card value is less than 16
-            if cards_value(dealer_cards) < 16:
+            else:
+                # allows player to hit or stick
+                player_cards, bet = player_action(player_cards, bet, money)
+
+                # dealer draws card if total card value is less than 16
                 dealer_cards = dealer_action(dealer_cards)
+
+                # payout
+                money, pot = check_win(bet, money, pot, player_cards, dealer_cards)
                 break
 
-            if cards_value(dealer_cards) >= 16:
-                break
-
-        money, pot = check_win(bet, money, pot)
         print(f"You have {money}, and there's a pot of {pot}")
 
