@@ -199,6 +199,21 @@ def get_bet(cash):
         if wager <= cash:
             return wager
 
+@pysnooper.snoop()
+def split_cards(cards, wager, cash):
+    # Draw second card for each half of split
+    hand1 = (cards[0],deck.pop(), )
+    hand2 = (cards[1],deck.pop(), )
+    # process hand 1
+    print("Hand1")
+    show_hand(hand1, dealer_cards, True)
+    hand1, wager = hit_stick(hand1, wager)
+
+    print("Hand2")
+    show_hand(hand2, dealer_cards, True)
+    hand2, wager = hit_stick(hand2, wager)
+    print("do split stuff")
+    print("payout hands")
 
 if __name__ == '__main__':
     money = 100
@@ -214,8 +229,8 @@ if __name__ == '__main__':
 
         # gets first two cards for player and dealer
 
-        # player_cards = deck.pop(), deck.pop()
-        player_cards = ('9♠', '9♠')
+        player_cards = deck.pop(), deck.pop()
+        # player_cards = ('9♠', '9♦')
 
         dealer_cards = deck.pop(), deck.pop()
 
@@ -229,23 +244,19 @@ if __name__ == '__main__':
             if player_cards[0][0] == player_cards[1][0]:
                 split = input("(S)plit?").upper()
                 if split == 'S':
-                    print("do split stuff")
-                    print("payout hands")
+                    split_cards(player_cards, bet, money)
                     break
 
-            # allows player to hit or stick
             else:
+                # allows player to hit or stick
                 player_cards, bet = player_action(player_cards, bet, money)
 
                 # dealer draws card if total card value is less than 16
-                if cards_value(dealer_cards) < 16:
-                    dealer_cards = dealer_action(dealer_cards)
-                    money, pot = check_win(bet, money, pot)
-                    break
+                dealer_cards = dealer_action(dealer_cards)
 
-                if cards_value(dealer_cards) >= 16:
-                    money, pot = check_win(bet, money, pot)
-                    break
+                # payout
+                money, pot = check_win(bet, money, pot)
+                break
 
         print(f"You have {money}, and there's a pot of {pot}")
 
