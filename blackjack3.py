@@ -139,7 +139,6 @@ def check_win(wager, cash, total_pot):
         cash += int((int(wager) * 1.5)) + total_pot
         total_pot = 0
         print("Player wins with a natural 21\n")
-        print("debug", cash, "pot", total_pot)
         return cash, total_pot
 
     # player loses bet
@@ -148,7 +147,6 @@ def check_win(wager, cash, total_pot):
         cash -= int(wager)
         total_pot = 0
         print("Player busted\n")
-        print("debug", cash, "pot", total_pot)
         return cash, total_pot
 
     # player wins bet
@@ -157,7 +155,6 @@ def check_win(wager, cash, total_pot):
         cash += int(wager) + total_pot
         total_pot = 0
         print("Dealer busted\n")
-        print("debug", cash, "pot", total_pot)
         return cash, total_pot
 
     # player loses bet
@@ -166,14 +163,12 @@ def check_win(wager, cash, total_pot):
         cash -= int(wager)
         total_pot = 0
         print("Dealer wins\n")
-        print("debug", cash, "pot", total_pot)
         return cash, total_pot
 
     # bet should be added to pot
     elif cards_value(player_cards) == cards_value(dealer_cards):
         show_hand(player_cards, dealer_cards, False)
         print("Player and dealer tied, pushing bet")
-        print("debug", cash, "pot", total_pot)
         cash -= int(wager)
         total_pot = int(wager) * 2
         return cash, total_pot
@@ -184,7 +179,6 @@ def check_win(wager, cash, total_pot):
         cash += int(wager) + total_pot
         total_pot = 0
         print("Player wins\n")
-        print("debug", cash)
         return cash, total_pot
 
 
@@ -198,7 +192,6 @@ if __name__ == '__main__':
             print("You're broke, thanks for playing")
             sys.exit()
         bet = input(f"How much do you want to wager, up to {money}? ")
-        print("debug", money)
         # gets first two cards for player and dealer
         player_cards = deck.pop(), deck.pop()
         dealer_cards = deck.pop(), deck.pop()
