@@ -16,7 +16,3 @@ comments directly in the file.
 *blackjack2*: second draft, old deck, running
 
 *backjack* was our first draft: running with errors
-
-
-
-
