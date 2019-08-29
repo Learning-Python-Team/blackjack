@@ -182,6 +182,19 @@ def check_win(wager, cash, total_pot):
         return cash, total_pot
 
 
+def get_bet(cash):
+    while True:
+        bet = input(f"How much do you want to wager, up to {cash}? Or (Q)uit").upper()
+        if bet == "Q":
+            print("Thanks for playing")
+            sys.exit()
+        if not bet.isdigit():
+            continue
+        bet = int(bet)
+        if bet < cash:
+            return bet
+
+
 if __name__ == '__main__':
     money = 100
     pot = 0
@@ -191,7 +204,9 @@ if __name__ == '__main__':
         if money == 0:
             print("You're broke, thanks for playing")
             sys.exit()
-        bet = input(f"How much do you want to wager, up to {money}? ")
+
+        bet = get_bet(money)
+
         # gets first two cards for player and dealer
         player_cards = deck.pop(), deck.pop()
         dealer_cards = deck.pop(), deck.pop()
