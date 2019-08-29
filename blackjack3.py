@@ -81,10 +81,10 @@ def draw(cards):
     return cards
 
 
-def player_action(cards):
+def player_action(cards, wager):
     """allows player to hit or stick
-
-    :param cards:
+    :param wager: bet
+    :param cards:player cards
     :return: cards after draw
     """
     # TODO break this into functions by action
@@ -95,13 +95,15 @@ def player_action(cards):
             # TODO figure out how to process a second player hand with 1 card each
             if split == 'Y':
                 split_cards(cards)
+
+    # draw second card on split
     except IndexError:
         cards = draw(cards)
 
     # checks if first two cards are a natural 21, tested
     if cards_value(cards) == 21:
         # return cards
-        return cards
+        return cards, wager
 
     # checks for 9, 10 , 11 for double down, also checks for aces with default value of 11, tested
     if cards_value(cards) in (9, 10, 11) or (
@@ -109,9 +111,9 @@ def player_action(cards):
         # player doubles bet
         double = input("(D)ouble down?").upper()
         if double == 'D':
-            # TODO bet should be doubled
+            wager = int(wager) * 2
             cards = draw(cards)
-            return cards
+            return cards, wager
 
     elif "A" in cards:
         print("ace in double down")
@@ -126,7 +128,7 @@ def player_action(cards):
         if action == "S":
             break
     # return cards with drawn cards
-    return cards
+    return cards, wager
 
 
 def split_cards(cards):
@@ -157,7 +159,8 @@ def check_win(wager, cash, total_pot):
     """checks various win conditions
 
     :param wager: amount of bet
-    :param cash: amount of money player has
+    :param cash: total player money
+    :param total_pot: pot carried over from ties
     :return:
     """
     # player has 2 cards totaling 21 player wins 1.5 * bet
@@ -200,7 +203,8 @@ def check_win(wager, cash, total_pot):
         show_hand(player_cards, dealer_cards, False)
         print("Player and dealer tied, pushing bet")
         print("debug", cash, "pot", total_pot)
-        total_pot = wager * 2
+        cash -= int(wager)
+        total_pot = int(wager) * 2
         return cash, total_pot
 
     # player wins bet
@@ -234,7 +238,7 @@ if __name__ == '__main__':
             print()
 
             # allows player to hit or stick
-            player_cards = player_action(player_cards)
+            player_cards, bet = player_action(player_cards, bet)
 
             # dealer draws card if total card value is less than 16
             if cards_value(dealer_cards) < 16:
