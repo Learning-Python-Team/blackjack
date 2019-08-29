@@ -17,9 +17,6 @@ comments directly in the file.
 
 *backjack* was our first draft: running with errors
 
-*deck* is a redesigned deck for the 3rd draft with suits (2♠ K♠ 9♦)
-- create deck - done
-- value cards - done
 
 
 
