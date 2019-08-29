@@ -214,8 +214,4 @@ if __name__ == '__main__':
 
         money, pot = check_win(bet, money, pot)
         print(f"You have {money}, and there's a pot of {pot}")
-        """
-        again = input("Play again? (Y)es or (N)o").upper()
-        if again == "N":
-            break
-        """
+
