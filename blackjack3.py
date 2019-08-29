@@ -1,6 +1,7 @@
 import random
 import sys
 
+
 HEARTS = chr(9829)
 DIAMONDS = chr(9830)
 SPADES = chr(9824)
@@ -81,7 +82,7 @@ def draw(cards):
     return cards
 
 
-def player_action(cards, wager):
+def player_action(cards, wager, cash):
     """allows player to hit or stick
     :param wager: bet
     :param cards:player cards
@@ -96,9 +97,12 @@ def player_action(cards, wager):
             cards_value(cards) in (19, 20, 21) and (cards[0][0] == 'A' or cards[1][0] == 'A')):
         double = input("(D)ouble down?").upper()
         if double == 'D':
-            wager = int(wager) * 2
-            cards = draw(cards)
-            return cards, wager
+            if wager * 2 <= cash:
+                wager = int(wager) * 2
+                cards = draw(cards)
+                return cards, wager
+            else:
+                return cards, wager
 
     elif "A" in cards:
         print("ace in double down")
@@ -217,7 +221,7 @@ if __name__ == '__main__':
             print()
 
             # allows player to hit or stick
-            player_cards, bet = player_action(player_cards, bet)
+            player_cards, bet = player_action(player_cards, bet, money)
 
             # dealer draws card if total card value is less than 16
             if cards_value(dealer_cards) < 16:
