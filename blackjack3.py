@@ -1,6 +1,6 @@
 import random
 import sys
-import pysnooper
+# import pysnooper
 
 HEARTS = chr(9829)
 DIAMONDS = chr(9830)
@@ -81,9 +81,10 @@ def draw(cards):
     cards += (deck.pop(),)
     return cards
 
-
+#@pysnooper.snoop()
 def player_action(cards, wager, cash):
     """allows player to hit or stick
+    :param cash:
     :param wager: bet
     :param cards:player cards
     :return: cards after draw
@@ -131,48 +132,50 @@ def dealer_action(cards):
     return cards
 
 
-def check_win(wager, cash, total_pot):
-    """checks various win conditions
-
+def check_win(wager, cash, total_pot, player_crds, dealer_crds):
+    """ checks various win conditions
+    
     :param wager: amount of bet
     :param cash: total player money
-    :param total_pot: pot carried over from ties
-    :return:
+    :param total_pot: pot from pushing
+    :param player_crds: 
+    :param dealer_crds: 
+    :return: 
     """
     # player has 2 cards totaling 21 player wins 1.5 * bet
-    if len(player_cards) == 2 and cards_value(player_cards) == 21:
+    if len(player_crds) == 2 and cards_value(player_crds) == 21:
         cash += int((int(wager) * 1.5)) + total_pot
         total_pot = 0
         print("Player wins with a natural 21\n")
         return cash, total_pot
 
     # player loses bet
-    elif cards_value(player_cards) > 21:
-        show_hand(player_cards, dealer_cards, False)
+    elif cards_value(player_crds) > 21:
+        show_hand(player_crds, dealer_crds, False)
         cash -= int(wager)
         total_pot = 0
         print("Player busted\n")
         return cash, total_pot
 
     # player wins bet
-    elif cards_value(dealer_cards) > 21:
-        show_hand(player_cards, dealer_cards, False)
+    elif cards_value(dealer_crds) > 21:
+        show_hand(player_crds, dealer_crds, False)
         cash += int(wager) + total_pot
         total_pot = 0
         print("Dealer busted\n")
         return cash, total_pot
 
     # player loses bet
-    elif cards_value(player_cards) < cards_value(dealer_cards):
-        show_hand(player_cards, dealer_cards, False)
+    elif cards_value(player_crds) < cards_value(dealer_crds):
+        show_hand(player_crds, dealer_crds, False)
         cash -= int(wager)
         total_pot = 0
         print("Dealer wins\n")
         return cash, total_pot
 
     # bet should be added to pot
-    elif cards_value(player_cards) == cards_value(dealer_cards):
-        show_hand(player_cards, dealer_cards, False)
+    elif cards_value(player_crds) == cards_value(dealer_crds):
+        show_hand(player_crds, dealer_crds, False)
         print("Player and dealer tied, pushing bet")
         cash -= int(wager)
         total_pot = int(wager) * 2
@@ -180,7 +183,7 @@ def check_win(wager, cash, total_pot):
 
     # player wins bet
     else:
-        show_hand(player_cards, dealer_cards, False)
+        show_hand(player_crds, dealer_crds, False)
         cash += int(wager) + total_pot
         total_pot = 0
         print("Player wins\n")
@@ -199,21 +202,29 @@ def get_bet(cash):
         if wager <= cash:
             return wager
 
-@pysnooper.snoop()
-def split_cards(cards, wager, cash):
+
+# @pysnooper.snoop()
+def split_cards(cards, wager, cash, pot, dealer_cards):
     # Draw second card for each half of split
     hand1 = (cards[0],deck.pop(), )
     hand2 = (cards[1],deck.pop(), )
+
     # process hand 1
     print("Hand1")
     show_hand(hand1, dealer_cards, True)
     hand1, wager = hit_stick(hand1, wager)
+    dealer_cards = dealer_action(dealer_cards)
+    show_hand(hand1, dealer_cards, False)
+    cash, pot = check_win(wager, cash, pot, hand1, dealer_cards)
 
     print("Hand2")
-    show_hand(hand2, dealer_cards, True)
+    show_hand(hand2, dealer_cards, False)
     hand2, wager = hit_stick(hand2, wager)
-    print("do split stuff")
-    print("payout hands")
+    show_hand(hand2, dealer_cards, False)
+    cash, pot = check_win(wager, cash, pot, hand2, dealer_cards)
+
+    return cash, pot
+
 
 if __name__ == '__main__':
     money = 100
@@ -230,10 +241,9 @@ if __name__ == '__main__':
         # gets first two cards for player and dealer
 
         player_cards = deck.pop(), deck.pop()
-        # player_cards = ('9♠', '9♦')
+        # player_cards = ('9♠', '9♦')  # for testing splits
 
         dealer_cards = deck.pop(), deck.pop()
-
 
         while True:
             # display hands
@@ -244,7 +254,7 @@ if __name__ == '__main__':
             if player_cards[0][0] == player_cards[1][0]:
                 split = input("(S)plit?").upper()
                 if split == 'S':
-                    split_cards(player_cards, bet, money)
+                    money, pot = split_cards(player_cards, bet, money, pot, dealer_cards)
                     break
 
             else:
@@ -255,7 +265,7 @@ if __name__ == '__main__':
                 dealer_cards = dealer_action(dealer_cards)
 
                 # payout
-                money, pot = check_win(bet, money, pot)
+                money, pot = check_win(bet, money, pot, player_cards, dealer_cards)
                 break
 
         print(f"You have {money}, and there's a pot of {pot}")
