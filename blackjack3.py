@@ -153,57 +153,64 @@ def dealer_action(cards):
     return cards
 
 
-def check_win(wager, cash):
+def check_win(wager, cash, pot):
     """checks various win conditions
 
     :param wager: amount of bet
     :param cash: amount of money player has
     :return:
     """
+    # player has 2 cards totaling 21 player wins 1.5 * bet
     if len(player_cards) == 2 and cards_value(player_cards) == 21:
-        # player wins 1.5 * bet
-        cash += int(wager) * 1.5
+        cash += (int(wager) * 1.5) + pot
+        pot = 0
         print("Player wins with a natural 21\n")
-        print("debug", cash)
-        return cash
+        print("debug", cash, "pot", pot)
+        return cash, pot
 
+    # player loses bet
     elif cards_value(player_cards) > 21:
         show_hand(player_cards, dealer_cards, False)
-        # player loses bet
         cash -= int(wager)
+        pot = 0
         print("Player busted\n")
-        print("debug", cash)
-        return cash
+        print("debug", cash, "pot", pot)
+        return cash, pot
 
+    # player wins bet
     elif cards_value(dealer_cards) > 21:
         show_hand(player_cards, dealer_cards, False)
-        # player wins bet
-        cash += int(wager)
+        cash += int(wager) + pot
+        pot = 0
         print("Dealer busted\n")
-        print("debug", cash)
-        return cash
+        print("debug", cash, "pot", pot)
+        return cash, pot
 
+    # player loses bet
     elif cards_value(player_cards) < cards_value(dealer_cards):
         show_hand(player_cards, dealer_cards, False)
-        # player loses bet
         cash -= int(wager)
+        pot = 0
         print("Dealer wins\n")
-        print("debug", cash)
-        return cash
+        print("debug", cash, "pot", pot)
+        return cash, pot
 
+    # bet should be added to pot
     elif cards_value(player_cards) == cards_value(dealer_cards):
-        # bet should be added to pot
         show_hand(player_cards, dealer_cards, False)
         print("Player and dealer tied, pushing bet")
-        print("debug", cash)
-        return cash
+        print("debug", cash, "pot", pot)
+        pot = wager * 2
+        return cash,
+
+    # player wins bet
     else:
-        # player wins bet
         show_hand(player_cards, dealer_cards, False)
-        cash += int(wager)
+        cash += int(wager) + pot
+        pot = 0
         print("Player wins\n")
         print("debug", cash)
-        return cash
+        return cash, pot
 
 
 if __name__ == '__main__':
@@ -237,8 +244,12 @@ if __name__ == '__main__':
             if cards_value(dealer_cards) >= 16:
                 break
 
-        money = check_win(bet, money)
+        # TODO pass pot
 
+        money, pot = check_win(bet, money, pot)
+        print(f"You have {money}, and there's a pot of {pot}")
+        """
         again = input("Play again? (Y)es or (N)o").upper()
         if again == "N":
             break
+        """
