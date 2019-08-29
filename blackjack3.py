@@ -22,25 +22,24 @@ def create_deck():
 
 
 def cards_value(cards):
-    """covert all cards to value adjusting for aces"""
+    """ assign values to cards, aces default to 11
+
+    :param cards: cards (rank, suit)
+    :return: total value of all cards
+    """
     card_value = 0
     aces = 0
     for card in cards:
-        # convert face cards to 10
         if card[0] in ['J', 'Q', 'K']:
             card_value += 10
-        # hack for 10 to allow for the extra character
         elif card[0:2] == '10':
             card_value += 10
-        # count aces
         elif card[0] == 'A':
             aces += 1
-        # assign regular cards values
         else:
             card_value += int(card[0])
 
     for ace in range(aces):
-        # aces are 11 unless it pushed total over 21
         if card_value + 11 <= 21:
             card_value += 11
         else:
