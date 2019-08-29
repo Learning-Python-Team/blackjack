@@ -72,6 +72,11 @@ def show_hand(player, dealer, hide_dealer):
 
 
 def draw(cards):
+    """ draws a single card and adds it to hand
+
+    :param cards:
+    :return: cards + one card
+    """
     cards += (deck.pop(),)
     return cards
 
