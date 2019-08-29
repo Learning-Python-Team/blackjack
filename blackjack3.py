@@ -81,7 +81,8 @@ def draw(cards):
     cards += (deck.pop(),)
     return cards
 
-#@pysnooper.snoop()
+
+# @pysnooper.snoop()
 def player_action(cards, wager, cash):
     """allows player to hit or stick
     :param cash:
@@ -204,26 +205,26 @@ def get_bet(cash):
 
 
 # @pysnooper.snoop()
-def split_cards(cards, wager, cash, pot, dealer_cards):
+def split_cards(cards, wager, cash, push_pot, dealer_crds):
     # Draw second card for each half of split
-    hand1 = (cards[0],deck.pop(), )
-    hand2 = (cards[1],deck.pop(), )
+    hand1 = (cards[0], deck.pop(), )
+    hand2 = (cards[1], deck.pop(), )
 
     # process hand 1
     print("Hand1")
-    show_hand(hand1, dealer_cards, True)
+    show_hand(hand1, dealer_crds, True)
     hand1, wager = hit_stick(hand1, wager)
-    dealer_cards = dealer_action(dealer_cards)
-    show_hand(hand1, dealer_cards, False)
-    cash, pot = check_win(wager, cash, pot, hand1, dealer_cards)
+    dealer_crds = dealer_action(dealer_crds)
+    show_hand(hand1, dealer_crds, False)
+    cash, push_pot = check_win(wager, cash, push_pot, hand1, dealer_crds)
 
     print("Hand2")
-    show_hand(hand2, dealer_cards, False)
+    show_hand(hand2, dealer_crds, False)
     hand2, wager = hit_stick(hand2, wager)
-    show_hand(hand2, dealer_cards, False)
-    cash, pot = check_win(wager, cash, pot, hand2, dealer_cards)
+    show_hand(hand2, dealer_crds, False)
+    cash, push_pot = check_win(wager, cash, push_pot, hand2, dealer_crds)
 
-    return cash, pot
+    return cash, push_pot
 
 
 if __name__ == '__main__':
@@ -269,4 +270,3 @@ if __name__ == '__main__':
                 break
 
         print(f"You have {money}, and there's a pot of {pot}")
-
