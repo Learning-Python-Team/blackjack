@@ -124,7 +124,7 @@ def player_action(cards, wager):
             cards = draw(cards)
             show_hand(cards, dealer_cards, True)
             if cards_value(cards) > 21:
-                return cards
+                return cards, wager
         if action == "S":
             break
     # return cards with drawn cards
@@ -247,8 +247,6 @@ if __name__ == '__main__':
 
             if cards_value(dealer_cards) >= 16:
                 break
-
-        # TODO pass pot
 
         money, pot = check_win(bet, money, pot)
         print(f"You have {money}, and there's a pot of {pot}")
