@@ -104,9 +104,6 @@ def player_action(cards, wager, cash):
             else:
                 return cards, wager
 
-    elif "A" in cards:
-        print("ace in double down")
-
     while True:
         action = input("(H)it, (S)tick").upper()
         if action == "H":
