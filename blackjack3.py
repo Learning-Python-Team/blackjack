@@ -191,7 +191,7 @@ def get_bet(cash):
         if not bet.isdigit():
             continue
         bet = int(bet)
-        if bet < cash:
+        if bet <= cash:
             return bet
 
 
