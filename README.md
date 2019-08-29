@@ -10,12 +10,7 @@
 comments directly in the file.
 
 #### About the files:
-#### *blackjack3.py* 
-WIP rewrite moving card display and card drawing to functions: running
-####TODO
-- betting WIP
-
-- fix second hand draw for split function
+#### *blackjack3.py* WIP all current features working
 
 
 *blackjack2*: second draft, old deck, running
