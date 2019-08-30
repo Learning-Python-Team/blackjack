@@ -13,8 +13,3 @@ def create_deck():
 
     random.shuffle(card_deck)
     return card_deck
-
-# for testing
-#deck = create_deck()
-
-#print(deck)
