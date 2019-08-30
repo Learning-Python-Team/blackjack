@@ -10,8 +10,14 @@
 comments directly in the file.
 
 #### About the files:
-#### *blackjack3.py* WIP all current features working
 
+### blackjack4 first attempt at adding a gui
+
+images: a full deck of cards with jokers and a card back
+
+#### *blackjack3.py* all current features working
+
+The early versions are in the old_versions folder
 
 *blackjack2*: second draft, old deck, running
 
