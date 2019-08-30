@@ -14,6 +14,6 @@ card_deck = create_deck()
 card_dict = {}
 
 for card in card_deck:
-    card_dict[card] = card + '.png'
+    card_dict[card] = "images/" + card + '.png'
 
 print(card_dict)
