@@ -10,16 +10,15 @@
 comments directly in the file.
 
 #### About the files:
-#### *blackjack3.py* WIP all current features working
 
+### blackjack4 first attempt at adding a gui
+
+images: a full deck of cards with jokers and a card back
+
+#### *blackjack3.py* all current features working
+
+The early versions are in the old_versions folder
 
 *blackjack2*: second draft, old deck, running
 
 *backjack* was our first draft: running with errors
-
-*deck* is a redesigned deck for the 3rd draft with suits (2♠ K♠ 9♦)
-- create deck - done
-- value cards - done
-
-
-
