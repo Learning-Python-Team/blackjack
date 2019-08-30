@@ -1,5 +1,6 @@
+"""
 def create_deck():
-    """ generate a 6 deck shoe of shuffled cards """
+    # generate a 6 deck shoe of shuffled cards
     card_deck = []
 
     for suit in ('H', 'S', 'C', 'D'):
@@ -17,3 +18,4 @@ for card in card_deck:
     card_dict[card] = "images/" + card + '.png'
 
 print(card_dict)
+"""
