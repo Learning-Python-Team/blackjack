@@ -233,7 +233,7 @@ if __name__ == '__main__':
     deck = create_deck()
 
     while True:
-        if money == 0:
+        if money <= 0:
             print("You're broke, thanks for playing")
             sys.exit()
 
@@ -241,8 +241,8 @@ if __name__ == '__main__':
 
         # gets first two cards for player and dealer
 
-        player_cards = deck.pop(), deck.pop()
-        # player_cards = ('9♠', '9♦')  # for testing splits
+        # player_cards = deck.pop(), deck.pop()
+        player_cards = ('9♠', '9♦')  # for testing splits
 
         dealer_cards = deck.pop(), deck.pop()
 
