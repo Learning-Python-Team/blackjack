@@ -1,0 +1,63 @@
+# dictionary of (cards, png_file)
+
+
+def card_conversion(card):
+    card_dict = {
+     '2H': '2H.png',
+     '3H': '3H.png',
+     '4H': '4H.png',
+     '5H': '5H.png',
+     '6H': '6H.png',
+     '7H': '7H.png',
+     '8H': '8H.png',
+     '9H': '9H.png',
+     '10H': '10H.png',
+     'AH': 'AH.png',
+     'JH': 'JH.png',
+     'QH': 'QH.png',
+     'KH': 'KH.png',
+     '2S': '2S.png',
+     '3S': '3S.png',
+     '4S': '4S.png',
+     '5S': '5S.png',
+     '6S': '6S.png',
+     '7S': '7S.png',
+     '8S': '8S.png',
+     '9S': '9S.png',
+     '10S': '10S.png',
+     'AS': 'AS.png',
+     'JS': 'JS.png',
+     'QS': 'QS.png',
+     'KS': 'KS.png',
+     '2C': '2C.png',
+     '3C': '3C.png',
+     '4C': '4C.png',
+     '5C': '5C.png',
+     '6C': '6C.png',
+     '7C': '7C.png',
+     '8C': '8C.png',
+     '9C': '9C.png',
+     '10C': '10C.png',
+     'AC': 'AC.png',
+     'JC': 'JC.png',
+     'QC': 'QC.png',
+     'KC': 'KC.png',
+     '2D': '2D.png',
+     '3D': '3D.png',
+     '4D': '4D.png',
+     '5D': '5D.png',
+     '6D': '6D.png',
+     '7D': '7D.png',
+     '8D': '8D.png',
+     '9D': '9D.png',
+     '10D': '10D.png',
+     'AD': 'AD.png',
+     'JD': 'JD.png',
+     'QD': 'QD.png',
+     'KD': 'KD.png',
+     'back': 'back.png'}
+
+    return card_dict[card]
+
+# for testing
+print(card_conversion('2H'))
