@@ -1,6 +1,6 @@
 import random
 import sys
-# import pysnooper
+
 
 HEARTS = chr(9829)
 DIAMONDS = chr(9830)
@@ -155,7 +155,7 @@ def check_win(wager, cash, total_pot, player_crds, dealer_crds):
         show_hand(player_crds, dealer_crds, False)
         cash -= int(wager)
         total_pot = 0
-        print("Player busted\n")
+        print("Player busted\n\n")
         return cash, total_pot
 
     # player wins bet
@@ -163,7 +163,7 @@ def check_win(wager, cash, total_pot, player_crds, dealer_crds):
         show_hand(player_crds, dealer_crds, False)
         cash += int(wager) + total_pot
         total_pot = 0
-        print("Dealer busted\n")
+        print("Dealer busted\n\n")
         return cash, total_pot
 
     # player loses bet
@@ -171,13 +171,13 @@ def check_win(wager, cash, total_pot, player_crds, dealer_crds):
         show_hand(player_crds, dealer_crds, False)
         cash -= int(wager)
         total_pot = 0
-        print("Dealer wins\n")
+        print("Dealer wins\n\n")
         return cash, total_pot
 
     # bet should be added to pot
     elif cards_value(player_crds) == cards_value(dealer_crds):
         show_hand(player_crds, dealer_crds, False)
-        print("Player and dealer tied, pushing bet")
+        print("Player and dealer tied, pushing bet\n\n")
         cash -= int(wager)
         total_pot = int(wager) * 2
         return cash, total_pot
@@ -187,7 +187,7 @@ def check_win(wager, cash, total_pot, player_crds, dealer_crds):
         show_hand(player_crds, dealer_crds, False)
         cash += int(wager) + total_pot
         total_pot = 0
-        print("Player wins\n")
+        print("Player wins\n\n")
         return cash, total_pot
 
 
@@ -204,8 +204,8 @@ def get_bet(cash):
             return wager
 
 
-# @pysnooper.snoop()
 def split_cards(cards, wager, cash, push_pot, dealer_crds):
+    wager = wager // 2
     # Draw second card for each half of split
     hand1 = (cards[0], deck.pop(), )
     hand2 = (cards[1], deck.pop(), )
@@ -233,7 +233,7 @@ if __name__ == '__main__':
     deck = create_deck()
 
     while True:
-        if money == 0:
+        if money <= 0:
             print("You're broke, thanks for playing")
             sys.exit()
 
