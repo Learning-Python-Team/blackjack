@@ -1,6 +1,6 @@
 import random
 import sys
-# import pysnooper
+import pysnooper
 
 HEARTS = chr(9829)
 DIAMONDS = chr(9830)
@@ -204,8 +204,9 @@ def get_bet(cash):
             return wager
 
 
-# @pysnooper.snoop()
+@pysnooper.snoop()
 def split_cards(cards, wager, cash, push_pot, dealer_crds):
+    wager = wager // 2
     # Draw second card for each half of split
     hand1 = (cards[0], deck.pop(), )
     hand2 = (cards[1], deck.pop(), )
