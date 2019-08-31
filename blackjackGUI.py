@@ -3,6 +3,10 @@ import sys
 import cards
 import game_functions
 
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+GREEN = (66, 245, 123)
+RED = (255, 0, 0)
 
 window_width = 1200
 window_height = 700
@@ -56,6 +60,18 @@ dealer_card4 = deck.pop()
 dealer_card5 = deck.pop()
 dealer_card6 = deck.pop()
 
+# text setting
+font_obj = pygame.font.Font('freesansbold.ttf', 32)
+text_surface_obj = font_obj.render("Dealer's Hand", True, BLACK, GREEN)
+text_rect_obj = text_surface_obj.get_rect()
+text_rect_obj.center = (window_width * .20, window_height * .050)
+
+# text setting
+font_obj1 = pygame.font.Font('freesansbold.ttf', 32)
+text_surface_obj1 = font_obj1.render("Player's Hand", True, BLACK, GREEN)
+text_rect_obj1 = text_surface_obj1.get_rect()
+text_rect_obj1.center = (window_width * .70, window_height * .050)
+
 while game_running:
 
     # gets 6 cards for player and dealer
@@ -82,6 +98,10 @@ while game_running:
 
     # Content here
     game_window.fill((66, 245, 123))
+
+    game_window.blit(text_surface_obj, text_rect_obj)
+    game_window.blit(text_surface_obj1, text_rect_obj1)
+
     card(dealer1_x, y, dealer_card1_image)
     card(dealer2_x, y, dealer_card2_image)
     card(dealer3_x, y, dealer_card3_image)
