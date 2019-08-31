@@ -55,6 +55,17 @@ dealer_card1 = deck.pop()
 dealer_card2 = deck.pop()
 dealer_back = "back"
 
+# text setting
+font_obj = pygame.font.Font('freesansbold.ttf', 32)
+text_surface_obj = font_obj.render("Dealer's Hand", True, BLACK, GREEN)
+text_rect_obj = text_surface_obj.get_rect()
+text_rect_obj.center = (window_width * .20, window_height * .050)
+
+# text setting
+font_obj1 = pygame.font.Font('freesansbold.ttf', 32)
+text_surface_obj1 = font_obj1.render("Player's Hand", True, BLACK, GREEN)
+text_rect_obj1 = text_surface_obj1.get_rect()
+text_rect_obj1.center = (window_width * .70, window_height * .050)
 
 
 # -------- Main Program Loop -----------
@@ -65,6 +76,9 @@ while not done:
             done = True
 
     gameDisplay.fill(GREEN)
+    # draw the text onto the surface
+    gameDisplay.blit(text_surface_obj, text_rect_obj)
+    gameDisplay.blit(text_surface_obj1, text_rect_obj1)
     # create card images
     player_card1_image = pygame.image.load(cards.card_conversion(player_card1))
     player_card2_image = pygame.image.load(cards.card_conversion(player_card2))
