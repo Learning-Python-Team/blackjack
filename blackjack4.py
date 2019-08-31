@@ -18,7 +18,7 @@ pygame.init()
 # Set the width and height of the screen [width, height]
 window_width = 1200
 window_height = 600
-gameDisplay = pygame.display.set_mode((window_width, window_height))
+game_window = pygame.display.set_mode((window_width, window_height))
 
 pygame.display.set_caption("Blackjack")
 
@@ -75,17 +75,17 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
 
-    gameDisplay.fill(GREEN)
+    game_window.fill(GREEN)
     # draw the text onto the surface
-    gameDisplay.blit(text_surface_obj, text_rect_obj)
-    gameDisplay.blit(text_surface_obj1, text_rect_obj1)
+    game_window.blit(text_surface_obj, text_rect_obj)
+    game_window.blit(text_surface_obj1, text_rect_obj1)
     # create card images
     player_card1_image = pygame.image.load(cards.card_conversion(player_card1))
     player_card2_image = pygame.image.load(cards.card_conversion(player_card2))
 
     # display cards
-    gf.card(pc1_x, y, player_card1_image, gameDisplay)
-    gf.card(pc2_x, y, player_card2_image, gameDisplay)
+    gf.card(pc1_x, y, player_card1_image, game_window)
+    gf.card(pc2_x, y, player_card2_image, game_window)
 
     # create card images
     dealer_back_image = pygame.image.load(cards.card_conversion(dealer_back))
@@ -93,8 +93,8 @@ while not done:
     dealer_card2_image = pygame.image.load(cards.card_conversion(dealer_card2))
 
     # display one card and show one back
-    gf.card(dealer1_x, y, dealer_card1_image, gameDisplay)
-    gf.card(dealer2_x, y, dealer_back_image, gameDisplay)
+    gf.card(dealer1_x, y, dealer_card1_image, game_window)
+    gf.card(dealer2_x, y, dealer_back_image, game_window)
 
     # --- Game logic should go here
 
