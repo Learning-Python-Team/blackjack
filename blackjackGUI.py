@@ -58,7 +58,7 @@ dealer_card6 = deck.pop()
 
 while game_running:
 
-    # gets first two cards for player and dealer
+    # gets 6 cards for player and dealer
     player_card1_image = pygame.image.load(cards.card_conversion(player_card1))
     player_card2_image = pygame.image.load(cards.card_conversion(player_card2))
     player_card3_image = pygame.image.load(cards.card_conversion(player_card3))
@@ -72,7 +72,6 @@ while game_running:
     dealer_card4_image = pygame.image.load(cards.card_conversion(dealer_card4))
     dealer_card5_image = pygame.image.load(cards.card_conversion(dealer_card5))
     dealer_card6_image = pygame.image.load(cards.card_conversion(dealer_card6))
-
 
 
     # Loop through all active events
