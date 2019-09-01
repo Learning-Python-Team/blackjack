@@ -67,6 +67,10 @@ text_surface_obj1 = font_obj1.render("Player's Hand", True, BLACK, GREEN)
 text_rect_obj1 = text_surface_obj1.get_rect()
 text_rect_obj1.center = (window_width * .70, window_height * .050)
 
+def text_objects(text, font):
+    textSurface = font.render(text, True, WHITE)
+    return textSurface, textSurface.get_rect()
+
 
 # -------- Main Program Loop -----------
 while not done:
@@ -96,6 +100,8 @@ while not done:
     gf.card(dealer1_x, y, dealer_card1_image, game_window)
     gf.card(dealer2_x, y, dealer_back_image, game_window)
 
+    gf.button("Hit!", ((window_width * .500)), (400 + (50 / 2)), 200, 50, BLACK, RED)
+    gf.button("Stick!", ((window_width * .750)), (400 + (50 / 2)), 200, 50, BLACK, RED)
     # --- Game logic should go here
 
     # --- Screen-clearing code goes here

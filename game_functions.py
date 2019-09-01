@@ -1,4 +1,5 @@
 import random
+import pygame
 import pysnooper
 
 def create_deck():
@@ -64,3 +65,43 @@ def draw(cards, deck):
 def card(x,y, card, game_window):
     """create card blit"""
     game_window.blit(card, (x, y))
+
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+GREEN = (66, 245, 123)
+RED = (255, 0, 0)
+window_width = 1200
+window_height = 600
+game_window = pygame.display.set_mode((window_width, window_height))
+
+def button(msg,x,y,w,h,ic,ac, action=None):
+    """draw button function
+    :param msg:  msg: What do you want the button to say on it.
+    :param x: The x location of the top left coordinate of the button box.
+    :param y: The y location of the top left coordinate of the button box.
+    :param w: Button width.
+    :param h: Button height.
+    :param ic: Inactive color (when a mouse is not hovering).
+    :param ac: Active color (when a mouse is hovering).
+    :return:
+    """
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    print(click)
+
+    if x+w > mouse[0] > x and y+h > mouse[1] > y:
+        pygame.draw.rect(game_window, ac, (x, y, w, h))
+
+        if click[0] == 1 and action != None:
+            action()
+    else:
+        pygame.draw.rect(game_window, ic, (x, y, w, h))
+
+    smallText = pygame.font.Font("freesansbold.ttf", 20)
+    textSurf, textRect = text_objects(msg, smallText)
+    textRect.center = ((x + (w / 2)), (y + (h / 2)))
+    game_window.blit(textSurf, textRect)
+
+def text_objects(text, font):
+    textSurface = font.render(text, True, WHITE)
+    return textSurface, textSurface.get_rect()
