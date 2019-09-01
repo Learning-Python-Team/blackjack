@@ -74,7 +74,7 @@ window_width = 1200
 window_height = 600
 game_window = pygame.display.set_mode((window_width, window_height))
 
-def button(msg,x,y,w,h,ic,ac):
+def button(msg,x,y,w,h,ic,ac, action=None):
     """draw button function
     :param msg:  msg: What do you want the button to say on it.
     :param x: The x location of the top left coordinate of the button box.
@@ -86,9 +86,14 @@ def button(msg,x,y,w,h,ic,ac):
     :return:
     """
     mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    print(click)
 
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(game_window, ac, (x, y, w, h))
+
+        if click[0] == 1 and action != None:
+            action()
     else:
         pygame.draw.rect(game_window, ic, (x, y, w, h))
 
