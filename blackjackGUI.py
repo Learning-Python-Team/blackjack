@@ -33,7 +33,7 @@ def text_objects(text, font):
     text_surface = font.render(text, True, WHITE)
     return text_surface, text_surface.get_rect()
 
-def button(msg,x,y,w,h,ic,ac):
+def button(msg,x,y,w,h,ic,ac, action=None):
     """draw button function
     :param msg:  msg: What do you want the button to say on it.
     :param x: The x location of the top left coordinate of the button box.
@@ -45,9 +45,14 @@ def button(msg,x,y,w,h,ic,ac):
     :return:
     """
     mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    print(click)
 
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(game_window, ac, (x, y, w, h))
+
+        if click[0] == 1 and action != None:
+            action()
     else:
         pygame.draw.rect(game_window, ic, (x, y, w, h))
 
@@ -55,6 +60,15 @@ def button(msg,x,y,w,h,ic,ac):
     textSurf, textRect = text_objects(msg, smallText)
     textRect.center = ((x + (w / 2)), (y + (h / 2)))
     game_window.blit(textSurf, textRect)
+
+def draw_card():
+    count = 2
+    card(pc1_x, y, player_card1_image)
+    card(pc2_x, y, player_card2_image)
+    card(pc3_x, y, player_card3_image)
+
+def stick():
+    sys.exit()
 
 y = (window_height * .1)
 pc1_x = (window_width * .500)
@@ -139,10 +153,11 @@ while game_running:
 
     card(pc1_x, y, player_card1_image)
     card(pc2_x, y, player_card2_image)
-    card(pc3_x, y, player_card3_image)
-    card(pc4_x, y, player_card4_image)
-    card(pc5_x, y, player_card5_image)
-    card(pc6_x, y, player_card6_image)
+    #card(pc3_x, y, player_card3_image)
+    #card(pc4_x, y, player_card4_image)
+
+    #card(pc5_x, y, player_card5_image)
+    #card(pc6_x, y, player_card6_image)
     """
     mouse = pygame.mouse.get_pos()
     # draw hit button
@@ -171,8 +186,8 @@ while game_running:
     textRect.center = (((window_width * .750) + 100), (450 + (50 / 2)))
     game_window.blit(textSurf, textRect)
     """
-    button("Hit!", ((window_width * .500)), (450 + (50 / 2)), 200, 50, BLACK, RED)
-    button("Stick!", ((window_width * .750)), (450 + (50 / 2)), 200, 50, BLACK, RED)
+    button("Hit!", ((window_width * .500)), (450 + (50 / 2)), 200, 50, BLACK, RED, draw_card)
+    button("Stick!", ((window_width * .750)), (450 + (50 / 2)), 200, 50, BLACK, RED, stick)
 
     # pygame.draw.rect(game_window, RED, ((window_width * .500), 450, 100, 50))
     # Update our display
