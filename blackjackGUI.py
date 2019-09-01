@@ -12,7 +12,7 @@ window_width = 1200
 window_height = 700
 
 pygame.init()
-
+clock = pygame.time.Clock()
 init_result = pygame.init()
 print(init_result)
 
@@ -26,6 +26,10 @@ game_running = True
 
 def card(x,y, card):
     game_window.blit(card, (x, y))
+
+def text_objects(text, font):
+    textSurface = font.render(text, True, WHITE)
+    return textSurface, textSurface.get_rect()
 
 y = (window_height * .1)
 pc1_x = (window_width * .500)
@@ -115,8 +119,34 @@ while game_running:
     card(pc4_x, y, player_card4_image)
     card(pc5_x, y, player_card5_image)
     card(pc6_x, y, player_card6_image)
+
+    mouse = pygame.mouse.get_pos()
+    # draw hit button
+    if (window_width * .500) + 200 > mouse[0] > 600 and 450 + 50 > mouse[1] > 450:
+        pygame.draw.rect(game_window, BLACK, ((window_width * .500), 450, 200, 50))
+    else:
+        pygame.draw.rect(game_window, RED, ((window_width * .500), 450, 200, 50))
+    # draw stand button
+    if (window_width * .750) + 200 > mouse[0] > (window_width * .750) and 450 + 50 > mouse[1] > 450:
+        pygame.draw.rect(game_window, BLACK, ((window_width * .750), 450, 200, 50))
+    else:
+        pygame.draw.rect(game_window, RED, ((window_width * .750), 450, 200, 50))
+
+    smallText = pygame.font.Font("freesansbold.ttf", 20)
+    textSurf, textRect = text_objects("HIT!", smallText)
+    textRect.center = (((window_width * .500) + 100), (450 + (50 / 2)))
+    game_window.blit(textSurf, textRect)
+
+    textSurf, textRect = text_objects("STICK!", smallText)
+    textRect.center = (((window_width * .750) + 100), (450 + (50 / 2)))
+    game_window.blit(textSurf, textRect)
+
+
+    # pygame.draw.rect(game_window, RED, ((window_width * .500), 450, 100, 50))
     # Update our display
     pygame.display.update()
+    # refresh rate
+    clock.tick(60)
 
 # Uninitialize all pygame modules and quit the program
 pygame.quit()
