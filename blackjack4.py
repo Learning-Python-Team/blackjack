@@ -100,28 +100,8 @@ while not done:
     gf.card(dealer1_x, y, dealer_card1_image, game_window)
     gf.card(dealer2_x, y, dealer_back_image, game_window)
 
-    mouse = pygame.mouse.get_pos()
-    # draw hit button
-    if (window_width * .500) + 200 > mouse[0] > 600 and 450 + 50 > mouse[1] > 450:
-        pygame.draw.rect(game_window, BLACK, ((window_width * .500), 450, 200, 50))
-    else:
-        pygame.draw.rect(game_window, RED, ((window_width * .500), 450, 200, 50))
-    # draw stand button
-    if (window_width * .750) + 200 > mouse[0] > (window_width * .750) and 450 + 50 > mouse[1] > 450:
-        pygame.draw.rect(game_window, BLACK, ((window_width * .750), 450, 200, 50))
-    else:
-        pygame.draw.rect(game_window, RED, ((window_width * .750), 450, 200, 50))
-
-    # hit button text
-    smallText = pygame.font.Font("freesansbold.ttf", 20)
-    textSurf, textRect = text_objects("HIT!", smallText)
-    textRect.center = (((window_width * .500) + 100), (450 + (50 / 2)))
-    game_window.blit(textSurf, textRect)
-    # stick button text
-    textSurf, textRect = text_objects("STICK!", smallText)
-    textRect.center = (((window_width * .750) + 100), (450 + (50 / 2)))
-    game_window.blit(textSurf, textRect)
-
+    gf.button("Hit!", ((window_width * .500)), (400 + (50 / 2)), 200, 50, BLACK, RED)
+    gf.button("Stick!", ((window_width * .750)), (400 + (50 / 2)), 200, 50, BLACK, RED)
     # --- Game logic should go here
 
     # --- Screen-clearing code goes here
