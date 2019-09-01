@@ -12,7 +12,7 @@ window_width = 1200
 window_height = 700
 
 pygame.init()
-
+clock = pygame.time.Clock()
 init_result = pygame.init()
 print(init_result)
 
@@ -24,8 +24,51 @@ pygame.display.set_caption("Blackjack")
 
 game_running = True
 
-def card(x,y, card):
-    game_window.blit(card, (x, y))
+
+def card(x, y, crd):
+    game_window.blit(crd, (x, y))
+
+
+def text_objects(text, font):
+    text_surface = font.render(text, True, WHITE)
+    return text_surface, text_surface.get_rect()
+
+def button(msg,x,y,w,h,ic,ac, action=None):
+    """draw button function
+    :param msg:  msg: What do you want the button to say on it.
+    :param x: The x location of the top left coordinate of the button box.
+    :param y: The y location of the top left coordinate of the button box.
+    :param w: Button width.
+    :param h: Button height.
+    :param ic: Inactive color (when a mouse is not hovering).
+    :param ac: Active color (when a mouse is hovering).
+    :return:
+    """
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    print(click)
+
+    if x+w > mouse[0] > x and y+h > mouse[1] > y:
+        pygame.draw.rect(game_window, ac, (x, y, w, h))
+
+        if click[0] == 1 and action != None:
+            action()
+    else:
+        pygame.draw.rect(game_window, ic, (x, y, w, h))
+
+    smallText = pygame.font.Font("freesansbold.ttf", 20)
+    textSurf, textRect = text_objects(msg, smallText)
+    textRect.center = ((x + (w / 2)), (y + (h / 2)))
+    game_window.blit(textSurf, textRect)
+
+def draw_card():
+    count = 2
+    card(pc1_x, y, player_card1_image)
+    card(pc2_x, y, player_card2_image)
+    card(pc3_x, y, player_card3_image)
+
+def stick():
+    sys.exit()
 
 y = (window_height * .1)
 pc1_x = (window_width * .500)
@@ -89,7 +132,6 @@ while game_running:
     dealer_card5_image = pygame.image.load(cards.card_conversion(dealer_card5))
     dealer_card6_image = pygame.image.load(cards.card_conversion(dealer_card6))
 
-
     # Loop through all active events
     for event in pygame.event.get():
         # Close the program if the user presses the 'X'
@@ -111,14 +153,48 @@ while game_running:
 
     card(pc1_x, y, player_card1_image)
     card(pc2_x, y, player_card2_image)
-    card(pc3_x, y, player_card3_image)
-    card(pc4_x, y, player_card4_image)
-    card(pc5_x, y, player_card5_image)
-    card(pc6_x, y, player_card6_image)
+    #card(pc3_x, y, player_card3_image)
+    #card(pc4_x, y, player_card4_image)
+
+    #card(pc5_x, y, player_card5_image)
+    #card(pc6_x, y, player_card6_image)
+    """
+    mouse = pygame.mouse.get_pos()
+    # draw hit button
+    if (window_width * .500) + 200 > mouse[0] > 600 and 450 + 50 > mouse[1] > 450:
+        pygame.draw.rect(game_window, BLACK, ((window_width * .500), 450, 200, 50))
+    else:
+        pygame.draw.rect(game_window, RED, ((window_width * .500), 450, 200, 50))
+    # draw stand button
+    if (window_width * .750) + 200 > mouse[0] > (window_width * .750) and 450 + 50 > mouse[1] > 450:
+        pygame.draw.rect(game_window, BLACK, ((window_width * .750), 450, 200, 50))
+    else:
+        pygame.draw.rect(game_window, RED, ((window_width * .750), 450, 200, 50))
+
+    #button(msg, x, y, w, h, ic, ac)
+    
+
+    # hit button text
+    
+    smallText = pygame.font.Font("freesansbold.ttf", 20)
+    textSurf, textRect = text_objects("HIT!", smallText)
+    textRect.center = (((window_width * .500) + 100), (450 + (50 / 2)))
+    game_window.blit(textSurf, textRect)
+    
+    # stick button text
+    textSurf, textRect = text_objects("STICK!", smallText)
+    textRect.center = (((window_width * .750) + 100), (450 + (50 / 2)))
+    game_window.blit(textSurf, textRect)
+    """
+    button("Hit!", ((window_width * .500)), (450 + (50 / 2)), 200, 50, BLACK, RED, draw_card)
+    button("Stick!", ((window_width * .750)), (450 + (50 / 2)), 200, 50, BLACK, RED, stick)
+
+    # pygame.draw.rect(game_window, RED, ((window_width * .500), 450, 100, 50))
     # Update our display
     pygame.display.update()
+    # refresh rate
+    clock.tick(60)
 
 # Uninitialize all pygame modules and quit the program
 pygame.quit()
 sys.exit()
-
