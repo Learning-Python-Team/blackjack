@@ -24,12 +24,14 @@ pygame.display.set_caption("Blackjack")
 
 game_running = True
 
-def card(x,y, card):
-    game_window.blit(card, (x, y))
+
+def card(x, y, crd):
+    game_window.blit(crd, (x, y))
+
 
 def text_objects(text, font):
-    textSurface = font.render(text, True, WHITE)
-    return textSurface, textSurface.get_rect()
+    text_surface = font.render(text, True, WHITE)
+    return text_surface, text_surface.get_rect()
 
 y = (window_height * .1)
 pc1_x = (window_width * .500)
@@ -93,7 +95,6 @@ while game_running:
     dealer_card5_image = pygame.image.load(cards.card_conversion(dealer_card5))
     dealer_card6_image = pygame.image.load(cards.card_conversion(dealer_card6))
 
-
     # Loop through all active events
     for event in pygame.event.get():
         # Close the program if the user presses the 'X'
@@ -142,7 +143,6 @@ while game_running:
     textRect.center = (((window_width * .750) + 100), (450 + (50 / 2)))
     game_window.blit(textSurf, textRect)
 
-
     # pygame.draw.rect(game_window, RED, ((window_width * .500), 450, 100, 50))
     # Update our display
     pygame.display.update()
@@ -152,4 +152,3 @@ while game_running:
 # Uninitialize all pygame modules and quit the program
 pygame.quit()
 sys.exit()
-
