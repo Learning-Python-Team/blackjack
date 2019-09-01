@@ -132,11 +132,12 @@ while game_running:
     else:
         pygame.draw.rect(game_window, RED, ((window_width * .750), 450, 200, 50))
 
+    # hit button text
     smallText = pygame.font.Font("freesansbold.ttf", 20)
     textSurf, textRect = text_objects("HIT!", smallText)
     textRect.center = (((window_width * .500) + 100), (450 + (50 / 2)))
     game_window.blit(textSurf, textRect)
-
+    # stick button text
     textSurf, textRect = text_objects("STICK!", smallText)
     textRect.center = (((window_width * .750) + 100), (450 + (50 / 2)))
     game_window.blit(textSurf, textRect)
