@@ -11,8 +11,8 @@ comments directly in the file.
 
 #### About the files:
 
-### blackjack4 first attempt at adding a gui
-### blackjackGUI GUI template
+### bj5.py Working, betting done, WIP play hand
+### blackjackGUI.py GUI template
 https://github.com/Learning-Python-Team/blackjack/blob/master/work/Capture.PNG
 
 images/ a full deck of cards with jokers and a card back
