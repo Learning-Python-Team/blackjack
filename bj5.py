@@ -78,8 +78,8 @@ RED = (255, 0, 0)
 
 
 # Used to add text to the game when needed.
-def add_text(text, font, surface, x, y, color):
-    textobject = font.render(text, 1, color)
+def add_text(text, font, surface, x, y, text_color):
+    textobject = font.render(text, 1, text_color)
     textrect = textobject.get_rect()
     textrect.topleft = (x, y)
     surface.blit(textobject, textrect)
@@ -250,6 +250,9 @@ def play_hand(bet, chips, player, dealer, deck):
         pic = pygame.image.load('images/' + str(card) + '.png')
         game_window.blit(pic, (pcardx, pcardy))
         pcardx += 75
+
+    add_text('(H) to hit (S) to stand', font, game_window, 600, 540, BLACK)
+
 
     dcardx, dcardy = (100, 100)
     dcard1 = pygame.image.load('images/' + str(dealer.cards[0]) + '.png')
